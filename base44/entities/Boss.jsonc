@@ -1,0 +1,56 @@
+{
+  "name": "Boss",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "hp": {
+      "type": "number",
+      "default": 100
+    },
+    "maxHp": {
+      "type": "number",
+      "default": 100
+    },
+    "color": {
+      "type": "string",
+      "default": "text-purple-500"
+    },
+    "xpReward": {
+      "type": "number",
+      "default": 1000
+    },
+    "coinReward": {
+      "type": "number",
+      "default": 500
+    },
+    "subtasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

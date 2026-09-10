@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 5%;
+    --foreground: 210 40% 96%;
+    --card: 222 47% 7%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 47% 7%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 263 70% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 40% 12%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 222 40% 12%;
+    --muted-foreground: 215 20% 45%;
+    --accent: 222 40% 15%;
+    --accent-foreground: 210 40% 96%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 222 30% 12%;
+    --input: 222 30% 12%;
+    --ring: 263 70% 58%;
+    --chart-1: 263 70% 58%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 1rem;
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 263 70% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 40% 12%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 222 30% 12%;
+    --sidebar-ring: 263 70% 58%;
+
+    /* NeuroSync custom tokens */
+    --ns-bg: 222 47% 5%;
+    --ns-surface: 222 40% 8%;
+    --ns-border: 222 30% 14%;
+    --ns-blue: 210 100% 60%;
+    --ns-purple: 263 70% 58%;
+    --ns-pink: 330 80% 60%;
+    --ns-emerald: 160 60% 45%;
+    --ns-amber: 38 92% 50%;
+    --ns-red: 0 72% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+
+/* Cyberpunk grid background */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+:root[data-experience-mode="professional"] {
+  --background: 220 20% 97%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 220 14% 93%;
+  --accent-foreground: 222 47% 11%;
+  --border: 220 13% 88%;
+  --input: 220 13% 88%;
+  --ns-bg: 220 20% 97%;
+  --ns-surface: 0 0% 100%;
+  --ns-border: 220 13% 88%;
+}
+
+.professional-shell {
+  background-image: linear-gradient(180deg, #f8fafc 0%, #f1f3f5 100%);
+  color: #0f172a;
+}
+
+.professional-shell input::placeholder,
+.professional-shell textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.professional-shell .rounded-\[2\.5rem\],
+.professional-shell .rounded-\[3rem\] {
+  border-radius: 1.25rem;
+}
+
+@layer components {
+  .professional-page { @apply max-w-6xl mx-auto animate-in fade-in; }
+  .professional-card { @apply bg-white border border-slate-300 rounded-2xl shadow-sm; }
+  .professional-heading { @apply flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7; }
+  .professional-heading h2 { @apply text-2xl md:text-3xl font-semibold tracking-tight text-slate-900; }
+  .professional-heading p:not(.professional-eyebrow) { @apply text-sm text-slate-600 mt-1; }
+  .professional-eyebrow { @apply text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-600; }
+  .professional-primary { @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-800 transition-colors shadow-sm; }
+  .professional-icon-button { @apply w-9 h-9 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition-colors; }
+  .professional-chip { @apply inline-flex items-center gap-1 px-2 py-1 rounded-md bg-slate-50 border border-slate-200 text-[10px] font-medium text-slate-600; }
+  .professional-input { @apply w-full px-3.5 py-3 rounded-xl bg-white border border-slate-300 text-sm text-slate-900 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-100; }
+  .professional-label { @apply block text-xs font-semibold text-slate-600 mb-2; }
+  .professional-filter { @apply h-10 px-3 rounded-lg bg-white border border-slate-300 text-sm text-slate-700 outline-none; }
+  .professional-empty { @apply py-16 flex flex-col items-center justify-center text-center text-slate-500; }
+  .professional-empty h3 { @apply mt-3 text-sm font-semibold text-slate-700; }
+  .professional-empty p { @apply mt-1 text-xs text-slate-600; }
+  .professional-helper { @apply text-xs text-slate-600; }
+}
+
+.auth-card {
+  width: min(28rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+}
+
+@media (max-width: 480px) {
+  .ns-modal-compact h3 {
+    font-size: 1.125rem;
+    line-height: 1.35;
+    margin-bottom: 1.25rem;
+    padding-right: 2.25rem;
+  }
+
+  .ns-modal-compact button,
+  .ns-modal-compact input {
+    min-width: 0;
+  }
+
+  .ns-modal-compact button {
+    letter-spacing: 0.08em;
+  }
+}

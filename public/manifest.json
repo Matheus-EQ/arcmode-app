@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "NeuroSync",
+  "short_name": "NeuroSync",
+  "description": "Aplicação de produtividade e planejamento com modos Profissional e RPG.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#090b14",
+  "theme_color": "#8b5cf6",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/IconNeuroSync-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/IconNeuroSync.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "name": "Player",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "default": "CyberRunner"
+    },
+    "level": {
+      "type": "number",
+      "default": 1
+    },
+    "xp": {
+      "type": "number",
+      "default": 0
+    },
+    "maxXp": {
+      "type": "number",
+      "default": 1000
+    },
+    "hp": {
+      "type": "number",
+      "default": 100
+    },
+    "coins": {
+      "type": "number",
+      "default": 0
+    },
+    "streak": {
+      "type": "number",
+      "default": 0
+    },
+    "lastCycleDate": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string",
+      "default": "default"
+    },
+    "theme": {
+      "type": "string",
+      "default": "purple"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "intelecto": {
+          "type": "number",
+          "default": 1
+        },
+        "fisico": {
+          "type": "number",
+          "default": 1
+        },
+        "disciplina": {
+          "type": "number",
+          "default": 1
+        },
+        "emocional": {
+          "type": "number",
+          "default": 1
+        },
+        "social": {
+          "type": "number",
+          "default": 1
+        },
+        "profissional": {
+          "type": "number",
+          "default": 1
+        }
+      }
+    },
+    "attrXp": {
+      "type": "object",
+      "properties": {
+        "intelecto": {
+          "type": "number",
+          "default": 0
+        },
+        "fisico": {
+          "type": "number",
+          "default": 0
+        },
+        "disciplina": {
+          "type": "number",
+          "default": 0
+        },
+        "emocional": {
+          "type": "number",
+          "default": 0
+        },
+        "social": {
+          "type": "number",
+          "default": 0
+        },
+        "profissional": {
+          "type": "number",
+          "default": 0
+        }
+      }
+    }
+  },
+  "required": []
+}

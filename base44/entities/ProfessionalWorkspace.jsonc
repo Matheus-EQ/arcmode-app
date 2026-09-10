@@ -1,0 +1,10 @@
+{
+  "name": "ProfessionalWorkspace",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object"
+    }
+  },
+  "required": ["data"]
+}

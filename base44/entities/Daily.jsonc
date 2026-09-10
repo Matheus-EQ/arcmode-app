@@ -1,0 +1,45 @@
+{
+  "name": "Daily",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "attribute": {
+      "type": "string",
+      "enum": [
+        "intelecto",
+        "fisico",
+        "disciplina",
+        "emocional",
+        "social",
+        "profissional"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "task",
+        "timer"
+      ],
+      "default": "task"
+    },
+    "duration": {
+      "type": "number",
+      "default": 0
+    },
+    "days": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
