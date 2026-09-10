@@ -67,7 +67,11 @@ VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
 ```
 
-### Publicação manual com Wrangler
+### Publicação manual pelo painel
+
+No projeto **Cloudflare Pages > neurosync-rpg > Deployments**, selecione **Create deployment**, escolha **Production**, envie a pasta `dist` ou um ZIP do conteúdo dela e confirme **Save and deploy**. Esse fluxo usa a sessão autenticada no navegador e não exige token no PowerShell.
+
+### Publicação opcional com Wrangler
 
 Após aprovação final:
 
@@ -76,7 +80,7 @@ pnpm build
 pnpm exec wrangler pages deploy dist --project-name neurosync-rpg
 ```
 
-O comando requer autenticação local no Cloudflare. Não salve tokens no repositório.
+O comando requer autenticação local no Cloudflare. Um token só é necessário para automação não interativa; ele não é necessário para a publicação manual pelo painel. Não salve tokens no repositório.
 
 ### Publicação conectada ao GitHub
 

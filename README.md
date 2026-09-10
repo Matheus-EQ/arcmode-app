@@ -1,5 +1,9 @@
 # NeuroSync
 
+Aplicação publicada: https://neurosync-rpg.pages.dev
+
+Repositório: https://github.com/Matheus-EQ/neurosync-app
+
 Aplicação web responsiva para organizar tarefas, projetos, compromissos e tempo em duas experiências: um workspace profissional e uma interface gamificada em estilo RPG.
 
 > Projeto pessoal em desenvolvimento. Ainda não é recomendado armazenar informações sensíveis ou depender do aplicativo como única fonte de dados.
@@ -95,7 +99,7 @@ public/          ícones, cabeçalhos, redirecionamento e mídia
 3. Ative confirmação obrigatória de e-mail antes da divulgação pública.
 4. Configure SMTP próprio para entrega confiável.
 
-As políticas RLS devem ser verificadas no ambiente remoto antes de cada publicação. A exclusão de conta depende de `supabase/delete-account-migration.sql`.
+As políticas RLS e a migração de exclusão foram verificadas no ambiente remoto em 10 de setembro de 2026. O arquivo `supabase/delete-account-migration.sql` permanece como fonte versionada e reproduzível da função.
 
 ## Deploy
 
@@ -106,13 +110,13 @@ O processo atual usa Cloudflare Pages com build `pnpm build` e diretório de sa�
 - a confirmação de que as RLS locais correspondem ao ambiente remoto é manual;
 - a sincronização profissional depende da migração `professional_workspaces`;
 - não há colaboração entre usuários, notificações push ou aplicativo nativo;
-- o projeto ainda precisa de revisão jurídica dos textos de Privacidade e Termos;
-- o canal de contato público ainda deve ser preenchido;
+- os textos de Privacidade e Termos descrevem o estado atual, mas não substituem revisão jurídica profissional;
+- solicitações públicas são recebidas pelas Issues do repositório; dados sensíveis não devem ser publicados ali;
 - não existe integração com modelo de inteligência artificial; o planejamento é baseado em regras.
 
 ## Roadmap
 
-- validar e publicar o modo demonstração;
+- ampliar os testes automatizados do modo demonstração publicado;
 - reforçar testes automatizados dos fluxos principais;
 - melhorar observabilidade e tratamento offline;
 - revisar acessibilidade com tecnologias assistivas;

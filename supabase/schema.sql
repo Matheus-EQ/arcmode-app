@@ -228,5 +228,5 @@ begin
 end;
 $$;
 
-revoke all on function public.delete_own_account() from public;
+revoke all on function public.delete_own_account() from public, anon, service_role;
 grant execute on function public.delete_own_account() to authenticated;

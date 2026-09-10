@@ -1,6 +1,6 @@
 # Material de portfólio — NeuroSync
 
-Textos preparados para aprovação. Nada foi publicado.
+Textos preparados para aprovação. A aplicação e o repositório estão públicos; o conteúdo de LinkedIn ainda não foi publicado.
 
 ## Capturas recomendadas
 

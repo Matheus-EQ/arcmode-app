@@ -15,7 +15,7 @@ Data da revisão: 10 de setembro de 2026.
 
 Antes das mudanças, os nomes dos arquivos JS e CSS publicados eram idênticos aos encontrados no `dist` local (`index--ekITe1C.js` e `index-BM-CZDyv.css`). A versão publicada abria diretamente a tela de autenticação e registrava ausência normal de sessão como erro no console.
 
-A versão local agora possui landing pública, demonstração isolada, páginas legais e melhorias de conta. Ela ainda não foi publicada, portanto produção continua na versão anterior.
+A versão revisada, com landing pública, demonstração isolada, páginas legais e melhorias de conta, foi publicada em produção e validada em `https://neurosync-rpg.pages.dev`.
 
 ## Segurança e dados
 
@@ -31,25 +31,26 @@ A versão local agora possui landing pública, demonstração isolada, páginas 
 
 As cinco tabelas — `players`, `dailies`, `bosses`, `history_logs` e `professional_workspaces` — habilitam RLS. As políticas de `select`, `insert`, `update` e `delete` exigem `created_by_id = auth.uid()`; as políticas de escrita também validam `with check`.
 
-Não há uma política aberta no SQL local. A pendência é confirmar no painel do Supabase que o ambiente de produção possui exatamente essas políticas e que nenhuma política adicional permissiva foi criada.
+Em 10 de setembro de 2026, o ambiente remoto foi verificado pelo Editor SQL: as cinco tabelas estão com RLS ativa e cada uma possui quatro políticas, cobrindo `select`, `insert`, `update` e `delete` para o papel autenticado com isolamento por `created_by_id = auth.uid()`.
 
 ### Exclusão de conta
 
 `supabase/delete-account-migration.sql` cria `delete_own_account()` como função `security definer`, sem parâmetro de usuário e com `search_path` vazio. Ela exclui somente `auth.uid()`. As chaves estrangeiras usam `on delete cascade`, removendo os registros associados. A execução pública é revogada e concedida apenas ao papel `authenticated`.
 
-Essa migração precisa ser revisada e aplicada manualmente antes de testar a exclusão no ambiente publicado.
+A migração foi aplicada em produção. A ACL efetiva foi verificada: somente `authenticated` (além do proprietário `postgres`) pode executar a função; `anon` e `service_role` não possuem permissão. O fluxo destrutivo completo ainda requer um teste com uma conta descartável controlada.
 
 ## Autenticação
 
 Fluxos presentes: cadastro, mensagem de confirmação, login, logout, recuperação e redefinição de senha. A rota protegida `/app` exige sessão, exceto no modo demonstração local. Foram adicionadas rotas públicas separadas para entrada e criação de conta.
 
-Dependências externas ainda necessárias:
+Configuração remota verificada em 10 de setembro de 2026:
 
-1. confirmação obrigatória de e-mail no Supabase;
-2. URL do site e redirects corretos;
-3. SMTP próprio para entrega confiável;
-4. aplicação da função de exclusão;
-5. teste com endereço de e-mail controlado pelo responsável.
+1. confirmação obrigatória de e-mail ativada;
+2. URL principal definida como `https://neurosync-rpg.pages.dev`;
+3. redirects permitidos para a raiz e `/reset-password`;
+4. função de exclusão aplicada com execução restrita ao papel autenticado.
+
+Ainda recomendado antes de divulgar o cadastro real: configurar SMTP próprio para entrega confiável e executar cadastro, confirmação, redefinição e exclusão com um endereço descartável controlado pelo responsável.
 
 ## Modo demonstração
 
@@ -80,33 +81,12 @@ Validado localmente:
 - troca entre Profissional e RPG;
 - isolamento e reinicialização da demonstração.
 
-Limite do teste: cadastro real, envio de e-mail, redefinição efetiva, exclusão real e confirmação das políticas remotas não foram executados, pois exigem configuração/credenciais externas e poderiam alterar produção.
+Limite do teste: cadastro real, entrega de e-mail, redefinição efetiva e exclusão destrutiva não foram executados sem um endereço de teste autorizado. As URLs, confirmação obrigatória, RLS remota e permissões da função de exclusão foram verificadas diretamente no ambiente de produção.
 
-## Git e primeiro commit
+## Git e repositório público
 
-A pasta `Codigo` não é um repositório Git. A alternativa mais segura é inicializar o repositório diretamente nela, sem mover ou apagar a pasta e sem usar o diretório vazio do Codex como substituto. Isso preserva caminhos, histórico operacional e configuração local.
+O Git foi inicializado diretamente na pasta `Codigo`, preservando a estrutura original. O repositório público oficial é `https://github.com/Matheus-EQ/neurosync-app`.
 
-Após autorização, o primeiro commit deve incluir:
+O conteúdo versionado inclui código, configurações públicas, documentação, migrações e materiais do projeto. Permanecem excluídos: `.env`, `node_modules`, `dist`, `.wrangler`, caches, logs, PIDs, ZIPs, arquivos de inspeção, `qa-screenshots` e credenciais locais.
 
-- arquivos de configuração na raiz, `.env.example`, `.gitignore`, README, auditoria e documentação;
-- `src/` completo;
-- `supabase/` completo;
-- `public/` completo, exceto itens cobertos pelo `.gitignore`;
-- `base44/` como compatibilidade legada documentada;
-- `scripts/` e seus quatro screenshots usados no material de portfólio;
-- `pnpm-lock.yaml` e `pnpm-workspace.yaml`.
-
-Não devem entrar: `.env`, `node_modules`, `dist`, `.wrangler`, caches, logs, PIDs, ZIPs, arquivos de inspeção, `qa-screenshots` e credenciais locais.
-
-Comandos a executar somente após autorização:
-
-```powershell
-Set-Location 'C:\Users\mathe\Documents\8. App NeuroSync\Codigo'
-git init -b main
-git add .
-git status --short
-git diff --cached --stat
-git commit -m "feat: prepare NeuroSync portfolio demo"
-```
-
-Nenhum remoto deve ser criado ou configurado antes de uma segunda revisão do conteúdo preparado para commit.
+Issues do repositório são o canal público para suporte e solicitações relacionadas a dados. Informações sensíveis não devem ser publicadas em uma issue.
