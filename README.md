@@ -48,18 +48,23 @@ O frontend consulta o Supabase usando apenas a chave anônima pública. Cada reg
 
 No modo demonstração, um usuário fictício e coleções próprias são criados com o prefixo `neurosync:demo:`. A sessão é marcada em `sessionStorage`, o cliente Supabase é ignorado e nenhuma operação alcança o banco de produção.
 
-## Imagens
+## Visão do produto
 
-### Experiência principal — Modo Profissional
+### Experiência principal — Modo Profissional no computador
 
-![Modo Profissional](public/marketing/video-preview/frame-01.png)
+![Painel do Modo Profissional no computador](public/marketing/screenshots/professional-desktop.png)
 
-<details>
-<summary>Visualização alternativa em modo RPG</summary>
+### Modo Profissional no celular
 
-![Modo RPG](public/marketing/video-preview/frame-03-final-v2.png)
+<p align="center">
+  <img src="public/marketing/screenshots/professional-mobile.png" width="280" alt="Painel do Modo Profissional no celular" />
+</p>
 
-</details>
+### Visualização alternativa — Modo RPG
+
+<p align="center">
+  <img src="public/marketing/screenshots/rpg-desktop.png" width="520" alt="Prévia do Modo RPG" />
+</p>
 
 ## Instalação local
 

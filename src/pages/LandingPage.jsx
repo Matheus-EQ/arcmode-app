@@ -23,26 +23,32 @@ export default function LandingPage() {
         </nav>
       </header>
 
-      <section className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-12 pb-20 lg:pt-20 lg:pb-28 grid lg:grid-cols-[0.9fr_1.1fr] gap-14 items-center">
+      <section className="relative max-w-7xl mx-auto px-5 sm:px-8 pt-8 sm:pt-12 pb-20 lg:pt-20 lg:pb-28 grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-14 items-center">
         <div className="absolute -top-40 -right-52 w-[44rem] h-[44rem] rounded-full bg-blue-600/20 blur-3xl" />
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-400/25 bg-blue-400/10 text-blue-200 text-xs font-semibold"><Sparkles size={14}/>Projeto pessoal em desenvolvimento</div>
-          <h1 className="mt-7 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-[-0.04em]">Organização profissional para transformar planos em uma rotina possível.</h1>
-          <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-xl">Centralize tarefas, projetos, compromissos e processos seletivos. Planeje o que cabe no dia e acompanhe cada avanço sem perder o contexto.</p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <h1 className="mt-5 sm:mt-7 text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-[-0.04em]">Organização profissional para transformar planos em uma rotina possível.</h1>
+          <p className="mt-4 sm:mt-6 text-base sm:text-xl text-slate-300 leading-relaxed max-w-xl">Centralize tarefas, projetos, compromissos e processos seletivos. Planeje o que cabe no dia e acompanhe cada avanço sem perder o contexto.</p>
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
             <button type="button" onClick={startDemo} className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-blue-500 text-white font-bold hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300">Experimentar demonstração <ArrowRight size={18}/></button>
             <Link to="/criar-conta" className="inline-flex items-center justify-center px-5 py-3.5 rounded-xl border border-white/15 bg-white/5 text-white font-semibold hover:bg-white/10">Criar conta</Link>
           </div>
-          <p className="mt-4 text-sm text-slate-400">Sem cadastro. Os dados da demonstração ficam isolados neste navegador.</p>
+          <p className="mt-3 sm:mt-4 text-sm text-slate-400">Sem cadastro. Os dados da demonstração ficam isolados neste navegador.</p>
         </div>
 
-        <div className="relative z-10 lg:pl-4">
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-blue-950/50 rotate-[1deg]">
-            <img src="/marketing/video-preview/frame-01.png" alt="Painel do modo Profissional do NeuroSync" className="w-full rounded-[1.5rem] border border-white/10" />
-          </div>
-          <div className="absolute -bottom-10 -left-4 sm:-left-10 w-44 sm:w-56 rounded-2xl border border-white/15 bg-[#111b31] p-2 shadow-2xl -rotate-3">
-            <img src="/marketing/video-preview/frame-03-final-v2.png" alt="Painel do modo RPG do NeuroSync" className="w-full rounded-xl" />
-          </div>
+        <div className="relative z-10 lg:pl-4 pb-20 sm:pb-24">
+          <figure className="rounded-[2rem] border border-white/10 bg-white/5 p-2 shadow-2xl shadow-blue-950/50 rotate-[1deg]">
+            <img src="/marketing/screenshots/professional-desktop.png" alt="Modo Profissional do NeuroSync aberto em um computador" className="w-full rounded-[1.5rem] border border-white/10" />
+            <figcaption className="sr-only">Painel principal do modo Profissional em uma tela de computador.</figcaption>
+          </figure>
+          <figure className="absolute bottom-0 -left-1 sm:-left-5 w-24 sm:w-32 rounded-[1.35rem] border border-white/20 bg-white p-1.5 shadow-2xl -rotate-3">
+            <img src="/marketing/screenshots/professional-mobile.png" alt="Modo Profissional do NeuroSync no celular" className="w-full rounded-[1rem]" />
+            <figcaption className="absolute -top-3 left-2 px-2 py-1 rounded-full bg-blue-500 text-[9px] font-bold shadow-lg">Profissional · celular</figcaption>
+          </figure>
+          <figure className="absolute bottom-3 right-0 w-36 sm:w-48 rounded-xl border border-purple-300/25 bg-[#11152a] p-1.5 shadow-2xl rotate-2">
+            <img src="/marketing/screenshots/rpg-desktop.png" alt="Prévia pequena do modo RPG do NeuroSync" className="w-full rounded-lg" />
+            <figcaption className="absolute -top-3 right-2 px-2 py-1 rounded-full bg-purple-600 text-[9px] font-bold shadow-lg">RPG · opcional</figcaption>
+          </figure>
         </div>
       </section>
 
