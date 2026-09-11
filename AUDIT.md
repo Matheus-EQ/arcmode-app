@@ -8,7 +8,7 @@ Data da revisão: 10 de setembro de 2026.
 - produção: `https://neurosync-rpg.pages.dev`;
 - frontend React/Vite hospedado no Cloudflare Pages;
 - Supabase para autenticação, Postgres e RLS;
-- compatibilidade legada com o SDK Base44 mantida no código;
+- cliente de dados próprio, integrado diretamente ao Supabase e ao armazenamento local da demonstração;
 - build estático em `dist` com fallback SPA via `public/_redirects`.
 
 ## Estado publicado versus código local

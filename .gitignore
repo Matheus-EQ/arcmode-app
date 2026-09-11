@@ -30,8 +30,6 @@ dist-ssr
 
 .env
 .vite
-base44/.app.jsonc
-
 # Ferramentas e artefatos locais
 .wrangler/
 .video-tools/

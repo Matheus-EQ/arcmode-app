@@ -1,14 +1,10 @@
-import { createClient } from '@base44/sdk';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import { appParams } from '@/lib/app-params';
 import { DEMO_USER_ID, demoStorageKey, isDemoMode } from '@/lib/demo-data';
-
-const { appId, token, functionsVersion, appBaseUrl } = appParams;
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
-const isLocalDev = !isSupabaseConfigured && import.meta.env.DEV && !appId;
+const isLocalDev = !isSupabaseConfigured && import.meta.env.DEV;
 export const isDemoSession = isDemoMode();
 
 const getLocalUser = () => {
@@ -235,13 +231,11 @@ const createSupabaseFacade = () => ({
   }
 });
 
-//Create a client with authentication required
 /** @type {any} */
-export const base44 = isDemoSession ? createLocalClient() : isSupabaseConfigured ? createSupabaseFacade() : isLocalDev ? createLocalClient() : createClient({
-  appId,
-  token,
-  functionsVersion,
-  serverUrl: '',
-  requiresAuth: false,
-  appBaseUrl
-});
+export const neurosync = isDemoSession
+  ? createLocalClient()
+  : isSupabaseConfigured
+    ? createSupabaseFacade()
+    : isLocalDev
+      ? createLocalClient()
+      : createLocalClient();

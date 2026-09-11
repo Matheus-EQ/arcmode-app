@@ -60,6 +60,13 @@ export default function LandingPage() {
             <article className="rounded-3xl bg-[#11152a] text-white border border-purple-400/20 p-7 sm:p-9"><Gamepad2 className="text-purple-400"/><p className="mt-6 text-xs font-bold uppercase tracking-[0.14em] text-purple-300">Experiência alternativa</p><h3 className="mt-2 text-xl font-bold">Modo RPG</h3><p className="mt-3 text-sm text-slate-300 leading-relaxed">Para quem prefere visualizar tarefas como missões e progresso como evolução de personagem.</p></article>
           </div>
           <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-4">{features.map(({icon:Icon,title,text})=><article key={title} className="rounded-2xl border border-slate-200 p-6"><Icon className="text-blue-700" size={22}/><h3 className="mt-5 font-bold text-lg">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p></article>)}</div>
+          <figure className="mt-16 rounded-[2rem] border border-slate-200 bg-slate-50 p-3 sm:p-5 shadow-xl shadow-slate-200/70">
+            <figcaption className="px-3 pt-3 pb-6 sm:px-5 sm:flex sm:items-end sm:justify-between sm:gap-8">
+              <div><p className="text-xs font-bold uppercase tracking-[0.16em] text-blue-700">Semana em uma única visão</p><h3 className="mt-2 text-2xl sm:text-3xl font-black tracking-tight">Tarefas e compromissos no calendário real.</h3></div>
+              <p className="mt-3 sm:mt-0 max-w-md text-sm sm:text-base text-slate-600">Distribua blocos de trabalho, reuniões, entrevistas e compromissos pessoais sem perder a capacidade de cada dia.</p>
+            </figcaption>
+            <img src="/marketing/screenshots/professional-weekly-calendar.png" alt="Calendário semanal do modo Profissional com tarefas e compromissos genéricos" className="w-full rounded-2xl border border-slate-200" />
+          </figure>
         </div>
       </section>
 

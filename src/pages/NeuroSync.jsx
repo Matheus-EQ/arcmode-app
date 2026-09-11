@@ -1,6 +1,6 @@
 // @ts-nocheck -- tela legada dinâmica; módulos novos e componentes compartilhados continuam verificados.
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { base44, isDemoSession } from '@/api/base44Client';
+import { isDemoSession, neurosync } from '@/api/neurosyncClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '@/lib/AuthContext';
 
@@ -110,7 +110,8 @@ function sendNotification(title, body) {
 export default function NeuroSync() {
   const qc = useQueryClient();
   const { logout, deleteAccount } = useAuth();
-  const [activeTab, setActiveTab] = useState('diarias');
+  const requestedTab = new URLSearchParams(window.location.search).get('view');
+  const [activeTab, setActiveTab] = useState(requestedTab === 'calendar' ? 'calendar' : 'diarias');
   const [showAddDaily, setShowAddDaily] = useState(false);
   const [showAddBoss, setShowAddBoss] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -146,25 +147,25 @@ export default function NeuroSync() {
   const isProfessional = experienceMode === 'professional';
 
   // --- CURRENT USER ---
-  const { data: currentUser } = useQuery({ queryKey: ['me'], queryFn: () => base44.auth.me() });
+  const { data: currentUser } = useQuery({ queryKey: ['me'], queryFn: () => neurosync.auth.me() });
   const uid = currentUser?.id;
 
   // --- DATA FETCHING (filtered by current user) ---
   const { data: players = [], isLoading: loadingPlayers } = useQuery({
     queryKey: ['players', uid], enabled: !!uid,
-    queryFn: () => base44.entities.Player.filter({ created_by_id: uid })
+    queryFn: () => neurosync.entities.Player.filter({ created_by_id: uid })
   });
   const { data: dailies = [], isLoading: loadingDailies } = useQuery({
     queryKey: ['dailies', uid], enabled: !!uid,
-    queryFn: () => base44.entities.Daily.filter({ created_by_id: uid })
+    queryFn: () => neurosync.entities.Daily.filter({ created_by_id: uid })
   });
   const { data: bosses = [], isLoading: loadingBosses } = useQuery({
     queryKey: ['bosses', uid], enabled: !!uid,
-    queryFn: () => base44.entities.Boss.filter({ created_by_id: uid })
+    queryFn: () => neurosync.entities.Boss.filter({ created_by_id: uid })
   });
   const { data: logs = [] } = useQuery({
     queryKey: ['logs', uid], enabled: !!uid,
-    queryFn: () => base44.entities.HistoryLog.filter({ created_by_id: uid }, '-created_date', 50)
+    queryFn: () => neurosync.entities.HistoryLog.filter({ created_by_id: uid }, '-created_date', 50)
   });
   const { data: professionalCloud } = useQuery({
     queryKey: ['professional-workspace', uid],
@@ -172,7 +173,7 @@ export default function NeuroSync() {
     retry: false,
     queryFn: async () => {
       try {
-        const records = await base44.entities.ProfessionalWorkspace.filter({ created_by_id: uid });
+        const records = await neurosync.entities.ProfessionalWorkspace.filter({ created_by_id: uid });
         return { supported: true, record: records[0] || null };
       } catch (error) {
         return { supported: false, record: null, error };
@@ -184,21 +185,21 @@ export default function NeuroSync() {
   const player = players[0] ?? null;
 
   // Player mutations
-  const createPlayer = useMutation({ mutationFn: (data) => base44.entities.Player.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['players', uid] }) });
-  const updatePlayer = useMutation({ mutationFn: ({ id, data }) => base44.entities.Player.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['players', uid] }) });
+  const createPlayer = useMutation({ mutationFn: (data) => neurosync.entities.Player.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['players', uid] }) });
+  const updatePlayer = useMutation({ mutationFn: ({ id, data }) => neurosync.entities.Player.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['players', uid] }) });
 
   // Daily mutations
-  const createDaily = useMutation({ mutationFn: (data) => base44.entities.Daily.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
-  const updateDaily = useMutation({ mutationFn: ({ id, data }) => base44.entities.Daily.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
-  const deleteDaily = useMutation({ mutationFn: (id) => base44.entities.Daily.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
+  const createDaily = useMutation({ mutationFn: (data) => neurosync.entities.Daily.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
+  const updateDaily = useMutation({ mutationFn: ({ id, data }) => neurosync.entities.Daily.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
+  const deleteDaily = useMutation({ mutationFn: (id) => neurosync.entities.Daily.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ['dailies', uid] }) });
 
   // Boss mutations
-  const createBoss = useMutation({ mutationFn: (data) => base44.entities.Boss.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
-  const updateBoss = useMutation({ mutationFn: ({ id, data }) => base44.entities.Boss.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
-  const deleteBoss = useMutation({ mutationFn: (id) => base44.entities.Boss.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
+  const createBoss = useMutation({ mutationFn: (data) => neurosync.entities.Boss.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
+  const updateBoss = useMutation({ mutationFn: ({ id, data }) => neurosync.entities.Boss.update(id, data), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
+  const deleteBoss = useMutation({ mutationFn: (id) => neurosync.entities.Boss.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ['bosses', uid] }) });
 
   // Log mutations
-  const createLog = useMutation({ mutationFn: (data) => base44.entities.HistoryLog.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['logs', uid] }) });
+  const createLog = useMutation({ mutationFn: (data) => neurosync.entities.HistoryLog.create({ ...data, created_by_id: uid }), onSuccess: () => qc.invalidateQueries({ queryKey: ['logs', uid] }) });
 
   // Load the current user's RPG theme.
   useEffect(() => {
@@ -212,7 +213,7 @@ export default function NeuroSync() {
     const savedMode = readExperienceMode(uid) || 'professional';
     setExperienceMode(savedMode);
     setShowExperienceMode(false);
-    if (savedMode === 'professional') setActiveTab('overview');
+    if (savedMode === 'professional') setActiveTab(requestedTab === 'calendar' ? 'calendar' : 'overview');
   }, [uid]);
 
   useEffect(() => {
@@ -262,9 +263,9 @@ export default function NeuroSync() {
     professionalCloudSyncRef.current = window.setTimeout(async () => {
       try {
         if (professionalCloudId) {
-          await base44.entities.ProfessionalWorkspace.update(professionalCloudId, { data: professionalData });
+          await neurosync.entities.ProfessionalWorkspace.update(professionalCloudId, { data: professionalData });
         } else {
-          const created = await base44.entities.ProfessionalWorkspace.create({ created_by_id: uid, data: professionalData });
+          const created = await neurosync.entities.ProfessionalWorkspace.create({ created_by_id: uid, data: professionalData });
           setProfessionalCloudId(created.id);
         }
         setProfessionalCloudStatus('synced');
@@ -616,9 +617,9 @@ export default function NeuroSync() {
         };
 
     await Promise.all([
-      base44.entities.Player.update(player.id, playerCycleData),
+      neurosync.entities.Player.update(player.id, playerCycleData),
       ...[...report.completedMissions, ...report.missedMissions]
-        .map((mission) => base44.entities.Daily.update(mission.id, { completed: false }))
+        .map((mission) => neurosync.entities.Daily.update(mission.id, { completed: false }))
     ]);
 
     if (isProfessional) {

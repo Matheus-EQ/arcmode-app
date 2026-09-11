@@ -54,6 +54,10 @@ No modo demonstração, um usuário fictício e coleções próprias são criado
 
 ![Painel do Modo Profissional no computador](public/marketing/screenshots/professional-desktop.png)
 
+### Calendário semanal — tarefas e compromissos em contexto
+
+![Calendário semanal do Modo Profissional](public/marketing/screenshots/professional-weekly-calendar.png)
+
 ### Modo Profissional no celular
 
 <p align="center">

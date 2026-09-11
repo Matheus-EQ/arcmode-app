@@ -6,7 +6,14 @@ const DEMO_PREFIX = 'neurosync:demo:';
 
 const iso = (date) => date.toISOString();
 
-export const isDemoMode = () => sessionStorage.getItem(DEMO_SESSION_KEY) === 'active';
+export const isDemoMode = () => {
+  const requestedByUrl = new URLSearchParams(window.location.search).get('demo') === '1';
+  if (requestedByUrl && sessionStorage.getItem(DEMO_SESSION_KEY) !== 'active') {
+    sessionStorage.setItem(DEMO_SESSION_KEY, 'active');
+    initializeDemoData();
+  }
+  return sessionStorage.getItem(DEMO_SESSION_KEY) === 'active';
+};
 
 export function initializeDemoData() {
   const now = new Date();
@@ -15,6 +22,11 @@ export function initializeDemoData() {
   const yesterday = getLocalDateKey(shiftLocalDate(now, -1));
   const created = iso(shiftLocalDate(now, -12));
   const weekdays = [1, 2, 3, 4, 5];
+  const mondayOffset = now.getDay() === 0 ? -6 : 1 - now.getDay();
+  const monday = getLocalDateKey(shiftLocalDate(now, mondayOffset));
+  const tuesday = getLocalDateKey(shiftLocalDate(now, mondayOffset + 1));
+  const wednesday = getLocalDateKey(shiftLocalDate(now, mondayOffset + 2));
+  const thursday = getLocalDateKey(shiftLocalDate(now, mondayOffset + 3));
 
   const player = {
     id: 'demo-player', created_by_id: DEMO_USER_ID, created_date: created, updated_date: iso(now),
@@ -72,8 +84,22 @@ export function initializeDemoData() {
     version: 5, updatedAt: iso(now), taskMeta, timeLogs: [{ id: 'demo-time-1', taskId: 'demo-task-1', minutes: 32, date: today }],
     activity: history.map((item) => ({ id: `activity-${item.id}`, text: item.text, date: item.date, type: item.type })),
     weeklyPlans: {}, dailyPlans: { [today]: ['demo-task-3', 'demo-task-1', 'demo-task-4'] },
-    scheduleBlocks: { [today]: [{ id: 'block-1', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '09:00', duration: 45 }, { id: 'block-2', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '14:00', duration: 60 }] },
-    commitments: [{ id: 'demo-commitment-1', title: 'Reunião de alinhamento', date: today, start: '11:00', duration: 45, recurrence: 'once' }, { id: 'demo-commitment-2', title: 'Revisão semanal', startDate: today, endDate: '', start: '16:30', duration: 30, recurrence: 'custom', days: [5] }, { id: 'recruitment:demo-recruitment-1:demo-stage-2', title: 'Entrevista com liderança: Empresa Horizonte — Analista de Produto Júnior', date: tomorrow, startDate: tomorrow, start: '15:00', duration: 60, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-1', recruitmentStageId: 'demo-stage-2' }],
+    scheduleBlocks: {
+      [monday]: [{ id: 'block-mon-1', taskId: 'demo-task-3', title: 'Planejar prioridades da semana', start: '08:30', duration: 30 }, { id: 'block-mon-2', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '10:00', duration: 60 }],
+      [tuesday]: [{ id: 'block-tue-1', taskId: 'demo-task-2', title: 'Responder mensagens prioritárias', start: '09:00', duration: 30 }, { id: 'block-tue-2', taskId: 'demo-task-6', title: 'Organizar anotações da semana', start: '15:00', duration: 45 }],
+      [wednesday]: [{ id: 'block-wed-1', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '09:30', duration: 60 }, { id: 'block-wed-2', taskId: 'demo-task-5', title: 'Caminhada e pausa sem telas', start: '17:00', duration: 30 }],
+      [thursday]: [{ id: 'block-thu-1', taskId: 'demo-task-1', title: 'Ajustar materiais do portfólio', start: '14:00', duration: 75 }],
+      [today]: [{ id: 'block-1', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '09:00', duration: 45 }, { id: 'block-2', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '14:00', duration: 60 }]
+    },
+    commitments: [
+      { id: 'demo-commitment-mon', title: 'Reunião de planejamento', date: monday, start: '13:30', duration: 45, recurrence: 'once' },
+      { id: 'demo-commitment-tue', title: 'Consulta de rotina', date: tuesday, start: '11:30', duration: 60, recurrence: 'once' },
+      { id: 'demo-commitment-wed', title: 'Alinhamento com a equipe', date: wednesday, start: '14:00', duration: 45, recurrence: 'once' },
+      { id: 'demo-commitment-thu', title: 'Mentoria de carreira', date: thursday, start: '10:30', duration: 60, recurrence: 'once' },
+      { id: 'demo-commitment-1', title: 'Reunião de alinhamento', date: today, start: '11:00', duration: 45, recurrence: 'once' },
+      { id: 'demo-commitment-2', title: 'Revisão semanal', startDate: today, endDate: '', start: '16:30', duration: 30, recurrence: 'custom', days: [5] },
+      { id: 'recruitment:demo-recruitment-1:demo-stage-2', title: 'Entrevista com liderança: Empresa Horizonte — Analista de Produto Júnior', date: tomorrow, startDate: tomorrow, start: '15:00', duration: 60, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-1', recruitmentStageId: 'demo-stage-2' }
+    ],
     recruitmentProcesses,
     occurrences: {}, preferences: { workdayStart: 8, workdayEnd: 18, breakMinutes: 60, defaultTaskMinutes: 30 }
   };

@@ -4,7 +4,7 @@ import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
-import { isSupabaseConfigured } from '@/api/base44Client';
+import { isSupabaseConfigured } from '@/api/neurosyncClient';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 // Add page imports here
 import NeuroSync from './pages/NeuroSync';
