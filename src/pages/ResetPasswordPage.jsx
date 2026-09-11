@@ -33,20 +33,20 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground cyber-grid flex items-center justify-center p-4 overflow-x-hidden">
-      <section className="auth-card bg-secondary/80 border border-border rounded-[1.75rem] sm:rounded-[2.5rem] p-5 sm:p-7 md:p-9 shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+    <main className="min-h-screen bg-slate-100 text-slate-900 flex items-center justify-center p-4 overflow-x-hidden">
+      <section className="auth-card bg-white border border-slate-200 rounded-3xl p-6 sm:p-9 shadow-xl overflow-hidden">
 
         <div className="text-center mb-8">
-          <Logo size={60} className="mx-auto rounded-2xl mb-4" />
-          <p className="text-[10px] font-black text-purple-400 uppercase tracking-[0.35em]">NeuroSync</p>
-          <h1 className="text-2xl sm:text-3xl leading-tight font-black text-white uppercase italic tracking-normal">Nova Senha</h1>
+          <Logo size={56} professional className="mx-auto rounded-2xl mb-4" />
+          <p className="text-xs font-semibold text-blue-700 uppercase tracking-[0.16em]">Acesso profissional</p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Definir nova senha</h1>
+          <p className="mt-2 text-sm text-slate-600">Escolha uma senha segura para voltar ao seu workspace.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block">
-            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-2 flex items-center gap-2">
-              <Lock size={12} /> Senha
+            <span className="text-xs font-semibold text-slate-700 mb-2 flex items-center gap-2">
+              <Lock size={14} /> Senha
             </span>
             <input
               type="password"
@@ -54,14 +54,14 @@ export default function ResetPasswordPage() {
               onChange={(event) => setPassword(event.target.value)}
               required
               minLength={6}
-              className="w-full bg-background border border-border p-4 rounded-2xl text-sm font-black text-white outline-none focus:border-purple-500 transition-colors"
-              placeholder="Minimo 6 caracteres"
+              className="professional-input"
+              placeholder="Mínimo de 6 caracteres"
             />
           </label>
 
           <label className="block">
-            <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-2 flex items-center gap-2">
-              <Lock size={12} /> Confirmar senha
+            <span className="text-xs font-semibold text-slate-700 mb-2 flex items-center gap-2">
+              <Lock size={14} /> Confirmar senha
             </span>
             <input
               type="password"
@@ -69,18 +69,18 @@ export default function ResetPasswordPage() {
               onChange={(event) => setConfirmation(event.target.value)}
               required
               minLength={6}
-              className="w-full bg-background border border-border p-4 rounded-2xl text-sm font-black text-white outline-none focus:border-purple-500 transition-colors"
+              className="professional-input"
               placeholder="Repita a nova senha"
             />
           </label>
 
-          {error && <p className="text-[10px] font-black text-red-400 uppercase tracking-widest">{error}</p>}
-          {notice && <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">{notice}</p>}
+          {error && <p className="text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-xl p-3">{error}</p>}
+          {notice && <p className="text-sm font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl p-3">{notice}</p>}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 disabled:opacity-50 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-[0.12em] sm:tracking-widest transition-all hover:brightness-110 flex items-center justify-center gap-2"
+            className="w-full bg-slate-950 hover:bg-slate-800 disabled:opacity-50 py-3.5 rounded-xl text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
           >
             <Save size={16} />
             {isSubmitting ? 'Atualizando...' : 'Salvar Senha'}
