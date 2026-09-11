@@ -19,13 +19,13 @@ A versão revisada, com landing pública, demonstração isolada, páginas legai
 
 ## Segurança e dados
 
-- o frontend usa `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`;
+- o frontend usa `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`;
 - não foi encontrado uso de `service_role` no frontend;
 - os valores locais não foram copiados nem registrados nesta auditoria;
 - `.env` está ignorado e `.env.example` foi explicitamente liberado para versionamento;
 - logs, PIDs, caches, `.wrangler`, ZIP de deploy, inspeções locais e capturas de QA estão ignorados;
 - artefatos de build (`dist`) e dependências (`node_modules`) estão ignorados;
-- a chave anônima do Supabase é pública por definição, mas sua segurança depende integralmente de RLS correta.
+- a chave publicável do Supabase é segura para uso no frontend, mas a proteção dos dados depende integralmente de políticas RLS corretas.
 
 ### RLS revisada no código
 
@@ -89,4 +89,4 @@ O Git foi inicializado diretamente na pasta `Codigo`, preservando a estrutura or
 
 O conteúdo versionado inclui código, configurações públicas, documentação, migrações e materiais do projeto. Permanecem excluídos: `.env`, `node_modules`, `dist`, `.wrangler`, caches, logs, PIDs, ZIPs, arquivos de inspeção, `qa-screenshots` e credenciais locais.
 
-Issues do repositório são o canal público para suporte e solicitações relacionadas a dados. Informações sensíveis não devem ser publicadas em uma issue.
+O canal oficial para suporte e solicitações relacionadas a dados é `contato.neurosyncapp@gmail.com`. Senhas, tokens e outros dados sensíveis não devem ser enviados.

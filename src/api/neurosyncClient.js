@@ -2,8 +2,8 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import { DEMO_USER_ID, demoStorageKey, isDemoMode } from '@/lib/demo-data';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabasePublishableKey);
 const isLocalDev = !isSupabaseConfigured && import.meta.env.DEV;
 export const isDemoSession = isDemoMode();
 
@@ -115,7 +115,7 @@ const throwIfSupabaseError = (error) => {
 };
 
 const supabase = isSupabaseConfigured
-  ? createSupabaseClient(supabaseUrl, supabaseAnonKey)
+  ? createSupabaseClient(supabaseUrl, supabasePublishableKey)
   : null;
 
 export { supabase };

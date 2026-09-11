@@ -6,6 +6,8 @@ Aplicação publicada: https://neurosync-rpg.pages.dev
 
 Repositório: https://github.com/Matheus-EQ/neurosync-app
 
+Contato: contato.neurosyncapp@gmail.com
+
 Aplicação web responsiva com o **Modo Profissional como experiência principal** e uma visualização RPG opcional para quem prefere acompanhar o progresso com elementos de gamificação.
 
 > Projeto pessoal em desenvolvimento. Ainda não é recomendado armazenar informações sensíveis ou depender do aplicativo como única fonte de dados.
@@ -44,7 +46,7 @@ Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como 
 
 ## Arquitetura resumida
 
-O frontend consulta o Supabase usando apenas a chave anônima pública. Cada registro persistido possui `created_by_id`; as políticas RLS limitam leitura e escrita ao usuário autenticado. O workspace profissional é salvo em uma coluna JSONB e também possui uma cópia local para continuidade no dispositivo. Preferências de interface e cronômetro usam `localStorage`.
+O frontend consulta o Supabase usando apenas a chave publicável. Cada registro persistido possui `created_by_id`; as políticas RLS limitam leitura e escrita ao usuário autenticado. O workspace profissional é salvo em uma coluna JSONB e também possui uma cópia local para continuidade no dispositivo. Preferências de interface e cronômetro usam `localStorage`.
 
 No modo demonstração, um usuário fictício e coleções próprias são criados com o prefixo `neurosync:demo:`. A sessão é marcada em `sessionStorage`, o cliente Supabase é ignorado e nenhuma operação alcança o banco de produção.
 
@@ -84,7 +86,7 @@ Preencha o `.env` local com as credenciais públicas do seu projeto Supabase:
 
 ```dotenv
 VITE_SUPABASE_URL=https://exemplo.supabase.co
-VITE_SUPABASE_ANON_KEY=chave_anonima_publica_de_exemplo
+VITE_SUPABASE_PUBLISHABLE_KEY=chave_publicavel_de_exemplo
 ```
 
 Nunca use `service_role` no frontend.
@@ -130,7 +132,7 @@ O processo atual usa Cloudflare Pages com build `pnpm build` e diretório de sa�
 - a sincronização profissional depende da migração `professional_workspaces`;
 - não há colaboração entre usuários, notificações push ou aplicativo nativo;
 - os textos de Privacidade e Termos descrevem o estado atual, mas não substituem revisão jurídica profissional;
-- solicitações públicas são recebidas pelas Issues do repositório; dados sensíveis não devem ser publicados ali;
+- dúvidas, suporte e solicitações relacionadas a dados são recebidos em `contato.neurosyncapp@gmail.com`;
 - não existe integração com modelo de inteligência artificial; o planejamento é baseado em regras.
 
 ## Roadmap

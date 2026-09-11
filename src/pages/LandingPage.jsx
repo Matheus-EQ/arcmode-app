@@ -72,7 +72,7 @@ export default function LandingPage() {
 
       <section className="max-w-5xl mx-auto px-5 sm:px-8 py-20 text-center"><h2 className="text-3xl sm:text-4xl font-black tracking-tight">Conheça o fluxo completo sem criar uma conta.</h2><p className="mt-4 text-slate-300">Teste tarefas, projetos, agenda, planejamento, cronômetro e relatórios com dados de exemplo.</p><button type="button" onClick={startDemo} className="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white text-slate-950 font-bold hover:bg-blue-50">Experimentar demonstração <ArrowRight size={18}/></button></section>
 
-      <footer className="border-t border-white/10"><div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-400"><p>NeuroSync · Projeto pessoal em desenvolvimento</p><div className="flex gap-5"><Link to="/privacidade" className="hover:text-white">Privacidade</Link><Link to="/termos" className="hover:text-white">Termos</Link></div></div></footer>
+      <footer className="border-t border-white/10"><div className="max-w-7xl mx-auto px-5 sm:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-400"><p>NeuroSync · Projeto pessoal em desenvolvimento</p><div className="flex flex-wrap justify-center gap-5"><a href="mailto:contato.neurosyncapp@gmail.com" className="hover:text-white">Contato</a><Link to="/privacidade" className="hover:text-white">Privacidade</Link><Link to="/termos" className="hover:text-white">Termos</Link></div></div></footer>
     </main>
   );
 }
