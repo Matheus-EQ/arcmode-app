@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   BarChart3, BriefcaseBusiness, CalendarDays, CheckCircle2, ChevronRight,
   Cloud, CloudOff, Inbox, LayoutDashboard, ListTodo, Menu, Plus, Search,
-  Settings, Sparkles, X
+  Settings, Sparkles, UserSearch, X
 } from 'lucide-react';
 import UniversalCreateMenu from '@/components/neurosync/UniversalCreateMenu';
 
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { id: 'diarias', label: 'Tarefas', icon: ListTodo },
   { id: 'inbox', label: 'Caixa de entrada', icon: Inbox },
   { id: 'bosses', label: 'Projetos', icon: BriefcaseBusiness },
+  { id: 'recruitment', label: 'Processos seletivos', icon: UserSearch },
   { id: 'calendar', label: 'Agenda', icon: CalendarDays },
   { id: 'historico', label: 'Relatórios', icon: BarChart3 },
   { id: 'perfil', label: 'Configurações', icon: Settings }

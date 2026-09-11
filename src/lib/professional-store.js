@@ -1,6 +1,6 @@
 import { getLocalDateKey, shiftLocalDate } from '@/lib/neurosync-session';
 
-const VERSION = 4;
+const VERSION = 5;
 
 export const PRIORITIES = {
   urgent: { label: 'Urgente', color: 'text-red-700 bg-red-50 border-red-200', order: 0 },
@@ -19,6 +19,7 @@ export const EMPTY_PROFESSIONAL_DATA = {
   dailyPlans: {},
   scheduleBlocks: {},
   commitments: [],
+  recruitmentProcesses: [],
   occurrences: {},
   preferences: {
     workdayStart: 8,
@@ -42,6 +43,7 @@ export function normalizeProfessionalData(data = {}) {
     dailyPlans: data.dailyPlans || {},
     scheduleBlocks: data.scheduleBlocks || {},
     commitments: data.commitments || [],
+    recruitmentProcesses: data.recruitmentProcesses || [],
     occurrences: data.occurrences || {},
     preferences: { ...EMPTY_PROFESSIONAL_DATA.preferences, ...(data.preferences || {}) }
   };

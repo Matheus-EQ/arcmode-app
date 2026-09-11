@@ -1,10 +1,12 @@
-# NeuroSync
+# NeuroSync — organização profissional em um só lugar
+
+O NeuroSync nasceu para organizar a rotina de forma prática: reunir tarefas, projetos, compromissos, tempo de foco e processos seletivos em uma visão que ajude a decidir o que fazer agora e o que acompanhar depois.
 
 Aplicação publicada: https://neurosync-rpg.pages.dev
 
 Repositório: https://github.com/Matheus-EQ/neurosync-app
 
-Aplicação web responsiva para organizar tarefas, projetos, compromissos e tempo em duas experiências: um workspace profissional e uma interface gamificada em estilo RPG.
+Aplicação web responsiva com o **Modo Profissional como experiência principal** e uma visualização RPG opcional para quem prefere acompanhar o progresso com elementos de gamificação.
 
 > Projeto pessoal em desenvolvimento. Ainda não é recomendado armazenar informações sensíveis ou depender do aplicativo como única fonte de dados.
 
@@ -17,6 +19,7 @@ Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como 
 - tarefas únicas e recorrentes, prioridades, subtarefas e dependências;
 - projetos com etapas e acompanhamento de progresso;
 - agenda diária, semanal e mensal com compromissos;
+- acompanhamento de processos seletivos, vagas, testes e entrevistas integrado à agenda;
 - planejamento diário e organização automática baseada em regras;
 - divisão de tarefas em sessões e cronômetro de foco;
 - conclusão, reabertura, encerramento do dia e reagendamento de pendências;
@@ -26,9 +29,9 @@ Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como 
 
 ## Modos de experiência
 
-**Profissional:** interface sóbria com visão “Hoje”, caixa de entrada, prioridades, capacidade do dia, agenda e relatórios.
+**Profissional (principal):** interface sóbria com visão “Hoje”, caixa de entrada, prioridades, projetos, processos seletivos, capacidade do dia, agenda e relatórios.
 
-**RPG:** apresenta tarefas como missões e projetos como desafios, com atributos, níveis, pontos de experiência e moedas. A gamificação muda a forma de visualizar o trabalho, não a persistência principal.
+**RPG (alternativo):** apresenta tarefas como missões e projetos como desafios, com atributos, níveis, pontos de experiência e moedas. A gamificação é uma camada opcional e não substitui o foco do produto em organização.
 
 ## Stack
 
@@ -47,9 +50,16 @@ No modo demonstração, um usuário fictício e coleções próprias são criado
 
 ## Imagens
 
+### Experiência principal — Modo Profissional
+
 ![Modo Profissional](public/marketing/video-preview/frame-01.png)
 
+<details>
+<summary>Visualização alternativa em modo RPG</summary>
+
 ![Modo RPG](public/marketing/video-preview/frame-03-final-v2.png)
+
+</details>
 
 ## Instalação local
 

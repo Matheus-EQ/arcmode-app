@@ -22,6 +22,7 @@ import ExperienceModeModal from '@/components/neurosync/ExperienceModeModal';
 import ProfessionalTaskModal from '@/components/neurosync/ProfessionalTaskModal';
 import ProfessionalLayout from '@/components/neurosync/ProfessionalLayout';
 import ProfessionalWorkspaceV2 from '@/components/neurosync/ProfessionalWorkspaceV2';
+import RecruitmentProcesses from '@/components/neurosync/RecruitmentProcesses';
 import RpgAgenda from '@/components/neurosync/RpgAgenda';
 import CommitmentModal from '@/components/neurosync/CommitmentModal';
 import RpgMobileNavigation from '@/components/neurosync/RpgMobileNavigation';
@@ -208,9 +209,9 @@ export default function NeuroSync() {
   // Keep the selected experience on this device without changing the database schema.
   useEffect(() => {
     if (!uid) return;
-    const savedMode = readExperienceMode(uid);
+    const savedMode = readExperienceMode(uid) || 'professional';
     setExperienceMode(savedMode);
-    setShowExperienceMode(!savedMode);
+    setShowExperienceMode(false);
     if (savedMode === 'professional') setActiveTab('overview');
   }, [uid]);
 
@@ -834,6 +835,67 @@ export default function NeuroSync() {
     showToast('Compromisso removido', 'complete');
   };
 
+  const saveRecruitmentProcess = (process) => {
+    const id = process.id || crypto.randomUUID();
+    const stages = (process.stages || []).map((stage) => ({ ...stage, id: stage.id || crypto.randomUUID() }));
+    const saved = {
+      ...process,
+      id,
+      stages,
+      createdAt: process.createdAt || new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+    const stageCommitments = stages
+      .filter((stage) => stage.date && stage.time)
+      .map((stage) => ({
+        id: `recruitment:${id}:${stage.id}`,
+        title: `${stage.type}: ${saved.company} — ${saved.role}`,
+        date: stage.date,
+        startDate: stage.date,
+        start: stage.time,
+        duration: Number(stage.duration || 60),
+        recurrence: 'once',
+        days: [],
+        kind: 'recruitment',
+        recruitmentProcessId: id,
+        recruitmentStageId: stage.id
+      }));
+    updateProfessionalData((current) => ({
+      ...current,
+      recruitmentProcesses: current.recruitmentProcesses.some((item) => item.id === id)
+        ? current.recruitmentProcesses.map((item) => item.id === id ? saved : item)
+        : [saved, ...current.recruitmentProcesses],
+      commitments: [
+        ...current.commitments.filter((item) => item.recruitmentProcessId !== id),
+        ...stageCommitments
+      ],
+      activity: [{
+        id: crypto.randomUUID(),
+        text: `${process.id ? 'Processo seletivo atualizado' : 'Processo seletivo criado'}: ${saved.company} — ${saved.role}`,
+        date: getLocalDateKey(),
+        type: 'recruitment'
+      }, ...current.activity].slice(0, 200)
+    }));
+    showToast('Processo seletivo salvo', 'complete');
+  };
+
+  const deleteRecruitmentProcess = (id) => {
+    updateProfessionalData((current) => ({
+      ...current,
+      recruitmentProcesses: current.recruitmentProcesses.filter((item) => item.id !== id),
+      commitments: current.commitments.filter((item) => item.recruitmentProcessId !== id)
+    }));
+    showToast('Processo seletivo removido', 'complete');
+  };
+
+  const editProfessionalCommitment = (commitment) => {
+    if (commitment?.kind === 'recruitment') {
+      setActiveTab('recruitment');
+      return;
+    }
+    setCommitmentModal({ commitment });
+  };
+
   const setProfessionalDailyPlan = (dateKey, topTaskIds) => {
     updateProfessionalData((current) => ({
       ...current,
@@ -1044,7 +1106,7 @@ export default function NeuroSync() {
               onToggle={toggleComplete}
               onToggleOccurrence={toggleProfessionalOccurrence}
               onAddCommitment={() => setCommitmentModal({ commitment: null })}
-              onEditCommitment={(commitment) => setCommitmentModal({ commitment })}
+              onEditCommitment={editProfessionalCommitment}
               onStartTimer={startTimer}
               onDelete={deleteProfessionalTask}
               onToggleSubtask={toggleProfessionalSubtask}
@@ -1068,6 +1130,14 @@ export default function NeuroSync() {
               onRemoveSubtask={removeSubtaskFromActiveBoss}
               onAddBoss={() => setShowAddBoss(true)}
               experienceMode={experienceMode}
+            />
+          )}
+          {activeTab === 'recruitment' && (
+            <RecruitmentProcesses
+              processes={professionalData.recruitmentProcesses}
+              onSave={saveRecruitmentProcess}
+              onDelete={deleteRecruitmentProcess}
+              onOpenCalendar={() => setActiveTab('calendar')}
             />
           )}
           {activeTab === 'perfil' && (

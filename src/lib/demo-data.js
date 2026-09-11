@@ -12,6 +12,7 @@ export function initializeDemoData() {
   const now = new Date();
   const today = getLocalDateKey(now);
   const tomorrow = getLocalDateKey(shiftLocalDate(now, 1));
+  const yesterday = getLocalDateKey(shiftLocalDate(now, -1));
   const created = iso(shiftLocalDate(now, -12));
   const weekdays = [1, 2, 3, 4, 5];
 
@@ -52,12 +53,28 @@ export function initializeDemoData() {
     'demo-task-6': { priority: 'medium', dueDate: tomorrow, dueTime: '', projectId: 'demo-project-2', notes: '', inbox: true, recurrence: 'once', subtasks: [], estimateMinutes: 25, scheduleMode: 'flexible', flexibleStart: '08:00', flexibleEnd: '18:00', splittable: false, minSessionMinutes: 25, dependencyIds: [] }
   };
 
+  const recruitmentProcesses = [{
+    id: 'demo-recruitment-1',
+    role: 'Analista de Produto Júnior',
+    company: 'Empresa Horizonte',
+    location: 'Híbrido · Rio de Janeiro',
+    description: 'Processo para atuar com organização de backlog, análise de indicadores e melhoria contínua da experiência do produto.',
+    status: 'interview',
+    createdAt: created,
+    updatedAt: iso(now),
+    stages: [
+      { id: 'demo-stage-1', type: 'Entrevista com RH', date: yesterday, time: '10:00', duration: 45, notes: 'Conversa inicial sobre perfil e disponibilidade.', completed: true },
+      { id: 'demo-stage-2', type: 'Entrevista com liderança', date: tomorrow, time: '15:00', duration: 60, notes: 'Preparar exemplos de projetos e resultados.', completed: false }
+    ]
+  }];
+
   const professionalData = {
-    version: 2, updatedAt: iso(now), taskMeta, timeLogs: [{ id: 'demo-time-1', taskId: 'demo-task-1', minutes: 32, date: today }],
+    version: 5, updatedAt: iso(now), taskMeta, timeLogs: [{ id: 'demo-time-1', taskId: 'demo-task-1', minutes: 32, date: today }],
     activity: history.map((item) => ({ id: `activity-${item.id}`, text: item.text, date: item.date, type: item.type })),
     weeklyPlans: {}, dailyPlans: { [today]: ['demo-task-3', 'demo-task-1', 'demo-task-4'] },
     scheduleBlocks: { [today]: [{ id: 'block-1', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '09:00', duration: 45 }, { id: 'block-2', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '14:00', duration: 60 }] },
-    commitments: [{ id: 'demo-commitment-1', title: 'Reunião de alinhamento', date: today, start: '11:00', duration: 45, recurrence: 'once' }, { id: 'demo-commitment-2', title: 'Revisão semanal', startDate: today, endDate: '', start: '16:30', duration: 30, recurrence: 'custom', days: [5] }],
+    commitments: [{ id: 'demo-commitment-1', title: 'Reunião de alinhamento', date: today, start: '11:00', duration: 45, recurrence: 'once' }, { id: 'demo-commitment-2', title: 'Revisão semanal', startDate: today, endDate: '', start: '16:30', duration: 30, recurrence: 'custom', days: [5] }, { id: 'recruitment:demo-recruitment-1:demo-stage-2', title: 'Entrevista com liderança: Empresa Horizonte — Analista de Produto Júnior', date: tomorrow, startDate: tomorrow, start: '15:00', duration: 60, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-1', recruitmentStageId: 'demo-stage-2' }],
+    recruitmentProcesses,
     occurrences: {}, preferences: { workdayStart: 8, workdayEnd: 18, breakMinutes: 60, defaultTaskMinutes: 30 }
   };
 
