@@ -12,9 +12,14 @@ import AuthPage from './pages/AuthPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import LandingPage from './pages/LandingPage';
 import LegalPage from './pages/LegalPage';
+import SubscriptionGate from './components/SubscriptionGate';
 
 const AuthenticatedApp = () => {
-  const { isAuthenticated, isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const {
+    isAuthenticated, isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin,
+    isBillingRequired, isLoadingEntitlement, hasPaidAccess, entitlementError,
+    checkEntitlement, logout
+  } = useAuth();
   const isResetPasswordRoute = window.location.pathname === '/reset-password';
   const isSignupRoute = window.location.pathname === '/criar-conta';
 
@@ -44,6 +49,14 @@ const AuthenticatedApp = () => {
 
   if (isSupabaseConfigured && !isAuthenticated) {
     return <AuthPage initialMode={isSignupRoute ? 'signup' : 'signin'} />;
+  }
+
+  if (isBillingRequired && isLoadingEntitlement) {
+    return <div className="fixed inset-0 bg-slate-100 flex items-center justify-center"><div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div></div>;
+  }
+
+  if (isBillingRequired && !hasPaidAccess) {
+    return <SubscriptionGate error={entitlementError} onRefresh={checkEntitlement} onLogout={logout} />;
   }
 
   if (window.location.pathname !== '/app') return <Navigate to="/app" replace />;

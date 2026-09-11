@@ -22,6 +22,7 @@ No SQL Editor, execute somente o que ainda não estiver aplicado:
 supabase/schema.sql                         # instalação completa em projeto novo
 supabase/professional-workspace-migration.sql
 supabase/delete-account-migration.sql
+supabase/commerce-migration.sql             # licenças e proteção comercial (inicia desativada)
 ```
 
 Depois, confirme no painel que RLS está ativa nas tabelas `players`, `dailies`, `bosses`, `history_logs` e `professional_workspaces`, e que cada política compara `created_by_id` com `auth.uid()`.
@@ -65,6 +66,8 @@ Variáveis públicas necessárias:
 ```text
 VITE_SUPABASE_URL
 VITE_SUPABASE_PUBLISHABLE_KEY
+VITE_BILLING_REQUIRED=false
+VITE_HOTMART_CHECKOUT_URL=
 ```
 
 ### Publicação manual pelo painel
@@ -92,7 +95,16 @@ Somente depois de criar e revisar um repositório remoto:
 4. cadastre somente as duas variáveis públicas do Supabase;
 5. mantenha previews de branches separados da produção.
 
-## 5. Checklist pós-deploy
+## 5. Preparação comercial da Hotmart
+
+Consulte `HOTMART_SETUP.md`. A cobrança deve permanecer desativada até que a
+função `hotmart-webhook` esteja publicada e os cenários de compra, renovação,
+cancelamento, reembolso e chargeback tenham sido testados.
+
+Nunca coloque `HOTMART_HOTTOK`, `SUPABASE_SERVICE_ROLE_KEY` ou credenciais da
+Hotmart no frontend. Esses valores pertencem somente à Edge Function.
+
+## 6. Checklist pós-deploy
 
 - a landing pública aparece antes do login;
 - a demonstração funciona sem requisições de escrita ao Supabase;

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { isDemoSession, isSupabaseConfigured, neurosync } from '@/api/neurosyncClient';
+import { isBillingRequired, isDemoSession, isSupabaseConfigured, neurosync } from '@/api/neurosyncClient';
 
 const AuthContext = createContext(null);
 
@@ -11,6 +11,30 @@ export const AuthProvider = ({ children }) => {
   const [authError, setAuthError] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [appPublicSettings, setAppPublicSettings] = useState(null);
+  const [entitlement, setEntitlement] = useState(null);
+  const [entitlementError, setEntitlementError] = useState(null);
+  const [isLoadingEntitlement, setIsLoadingEntitlement] = useState(isBillingRequired);
+
+  const checkEntitlement = async () => {
+    if (!isBillingRequired || isDemoSession) {
+      setEntitlement({ status: 'active', is_active: true, source: isDemoSession ? 'demo' : 'billing-disabled' });
+      setEntitlementError(null);
+      setIsLoadingEntitlement(false);
+      return;
+    }
+
+    setIsLoadingEntitlement(true);
+    try {
+      setEntitlement(await neurosync.billing.getEntitlement());
+      setEntitlementError(null);
+    } catch (error) {
+      console.error('Falha ao verificar a assinatura:', error);
+      setEntitlement(null);
+      setEntitlementError('Não foi possível verificar sua assinatura agora. Tente novamente em alguns instantes.');
+    } finally {
+      setIsLoadingEntitlement(false);
+    }
+  };
 
   const checkUserAuth = async ({ quiet = false } = {}) => {
     try {
@@ -19,13 +43,16 @@ export const AuthProvider = ({ children }) => {
       setUser(currentUser);
       setIsAuthenticated(true);
       setAuthError(null);
+      await checkEntitlement();
     } catch (error) {
       if (!quiet) console.error('Falha ao verificar a sessão:', error);
       setUser(null);
       setIsAuthenticated(false);
+      setEntitlement(null);
       setAuthError(null);
     } finally {
       setIsLoadingAuth(false);
+      setIsLoadingEntitlement(false);
       setAuthChecked(true);
     }
   };
@@ -35,6 +62,8 @@ export const AuthProvider = ({ children }) => {
       setAppPublicSettings({ id: 'demo', public_settings: {} });
       setUser(await neurosync.auth.me());
       setIsAuthenticated(true);
+      setEntitlement({ status: 'active', is_active: true, source: 'demo' });
+      setIsLoadingEntitlement(false);
       setIsLoadingPublicSettings(false);
       setIsLoadingAuth(false);
       setAuthChecked(true);
@@ -52,6 +81,8 @@ export const AuthProvider = ({ children }) => {
       setAppPublicSettings({ id: 'local-dev', public_settings: {} });
       setUser(await neurosync.auth.me());
       setIsAuthenticated(true);
+      setEntitlement({ status: 'active', is_active: true, source: 'local-development' });
+      setIsLoadingEntitlement(false);
       setIsLoadingPublicSettings(false);
       setIsLoadingAuth(false);
       setAuthChecked(true);
@@ -76,6 +107,8 @@ export const AuthProvider = ({ children }) => {
     await neurosync.auth.logout();
     setUser(null);
     setIsAuthenticated(false);
+    setEntitlement(null);
+    setEntitlementError(null);
     if (shouldRedirect) window.location.assign('/');
   };
 
@@ -84,6 +117,7 @@ export const AuthProvider = ({ children }) => {
     await neurosync.auth.deleteAccount();
     setUser(null);
     setIsAuthenticated(false);
+    setEntitlement(null);
   };
 
   const navigateToLogin = () => {
@@ -108,11 +142,15 @@ export const AuthProvider = ({ children }) => {
     await checkUserAuth({ quiet: true });
   };
 
+  const hasPaidAccess = !isBillingRequired || isDemoSession || Boolean(entitlement?.is_active);
+
   return (
     <AuthContext.Provider value={{
       user, isAuthenticated, isLoadingAuth, isLoadingPublicSettings, authError,
       appPublicSettings, authChecked, logout, signIn, signUp, resetPassword,
-      updatePassword, deleteAccount, navigateToLogin, checkUserAuth, checkAppState
+      updatePassword, deleteAccount, navigateToLogin, checkUserAuth, checkAppState,
+      entitlement, entitlementError, isLoadingEntitlement, hasPaidAccess,
+      isBillingRequired, checkEntitlement
     }}>
       {children}
     </AuthContext.Provider>

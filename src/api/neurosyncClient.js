@@ -3,6 +3,8 @@ import { DEMO_USER_ID, demoStorageKey, isDemoMode } from '@/lib/demo-data';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+export const isBillingRequired = import.meta.env.VITE_BILLING_REQUIRED === 'true';
+export const hotmartCheckoutUrl = import.meta.env.VITE_HOTMART_CHECKOUT_URL || '';
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabasePublishableKey);
 const isLocalDev = !isSupabaseConfigured && import.meta.env.DEV;
 export const isDemoSession = isDemoMode();
@@ -98,6 +100,11 @@ const createLocalClient = () => ({
     Boss: createLocalEntity('Boss'),
     HistoryLog: createLocalEntity('HistoryLog'),
     ProfessionalWorkspace: createLocalEntity('ProfessionalWorkspace')
+  },
+  billing: {
+    async getEntitlement() {
+      return { status: 'active', is_active: true, source: isDemoSession ? 'demo' : 'local-development' };
+    }
   }
 });
 
@@ -228,6 +235,31 @@ const createSupabaseFacade = () => ({
     Boss: createSupabaseEntity('Boss'),
     HistoryLog: createSupabaseEntity('HistoryLog'),
     ProfessionalWorkspace: createSupabaseEntity('ProfessionalWorkspace')
+  },
+  billing: {
+    async getEntitlement() {
+      const { error: claimError } = await supabase.rpc('claim_own_entitlement');
+      throwIfSupabaseError(claimError);
+
+      const { data, error } = await supabase
+        .from('access_entitlements')
+        .select('id,status,plan_name,access_until,provider,updated_date')
+        .order('updated_date', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      throwIfSupabaseError(error);
+
+      if (!data) return null;
+      const accessUntil = data.access_until ? new Date(data.access_until) : null;
+      const isWithinAccessPeriod = !accessUntil || accessUntil.getTime() > Date.now();
+      const isActiveStatus = data.status === 'active' || data.status === 'trialing';
+      const isCancelledWithRemainingAccess = data.status === 'cancelled' && Boolean(accessUntil) && isWithinAccessPeriod;
+
+      return {
+        ...data,
+        is_active: isWithinAccessPeriod && (isActiveStatus || isCancelledWithRemainingAccess)
+      };
+    }
   }
 });
 

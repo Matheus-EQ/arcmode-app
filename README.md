@@ -48,6 +48,10 @@ Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como 
 
 O frontend consulta o Supabase usando apenas a chave publicável. Cada registro persistido possui `created_by_id`; as políticas RLS limitam leitura e escrita ao usuário autenticado. O workspace profissional é salvo em uma coluna JSONB e também possui uma cópia local para continuidade no dispositivo. Preferências de interface e cronômetro usam `localStorage`.
 
+A base comercial para a Hotmart fica em `access_entitlements` e inclui uma Edge
+Function para receber eventos de assinatura. O bloqueio pago nasce desativado e
+só deve ser habilitado depois do checklist de `HOTMART_SETUP.md`.
+
 No modo demonstração, um usuário fictício e coleções próprias são criados com o prefixo `neurosync:demo:`. A sessão é marcada em `sessionStorage`, o cliente Supabase é ignorado e nenhuma operação alcança o banco de produção.
 
 ## Visão do produto
@@ -87,6 +91,8 @@ Preencha o `.env` local com as credenciais públicas do seu projeto Supabase:
 ```dotenv
 VITE_SUPABASE_URL=https://exemplo.supabase.co
 VITE_SUPABASE_PUBLISHABLE_KEY=chave_publicavel_de_exemplo
+VITE_BILLING_REQUIRED=false
+VITE_HOTMART_CHECKOUT_URL=
 ```
 
 Nunca use `service_role` no frontend.
