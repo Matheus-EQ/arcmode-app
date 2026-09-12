@@ -5,7 +5,7 @@ Data da revisão: 10 de setembro de 2026.
 ## Escopo observado
 
 - código real: `C:\Users\mathe\Documents\8. App NeuroSync\Codigo`;
-- produção: `https://neurosync-rpg.pages.dev`;
+- produção: `https://arcmode-app.pages.dev`;
 - frontend React/Vite hospedado no Cloudflare Pages;
 - Supabase para autenticação, Postgres e RLS;
 - cliente de dados próprio, integrado diretamente ao Supabase e ao armazenamento local da demonstração;
@@ -15,7 +15,7 @@ Data da revisão: 10 de setembro de 2026.
 
 Antes das mudanças, os nomes dos arquivos JS e CSS publicados eram idênticos aos encontrados no `dist` local (`index--ekITe1C.js` e `index-BM-CZDyv.css`). A versão publicada abria diretamente a tela de autenticação e registrava ausência normal de sessão como erro no console.
 
-A versão revisada, com landing pública, demonstração isolada, páginas legais e melhorias de conta, foi publicada em produção e validada em `https://neurosync-rpg.pages.dev`.
+A versão revisada, com landing pública, demonstração isolada, páginas legais e melhorias de conta, foi publicada em produção e validada em `https://arcmode-app.pages.dev`.
 
 ## Segurança e dados
 
@@ -46,7 +46,7 @@ Fluxos presentes: cadastro, mensagem de confirmação, login, logout, recuperaç
 Configuração remota verificada em 10 de setembro de 2026:
 
 1. confirmação obrigatória de e-mail ativada;
-2. URL principal definida como `https://neurosync-rpg.pages.dev`;
+2. URL principal definida como `https://arcmode-app.pages.dev`;
 3. redirects permitidos para a raiz e `/reset-password`;
 4. função de exclusão aplicada com execução restrita ao papel autenticado.
 

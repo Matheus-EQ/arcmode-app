@@ -2,7 +2,7 @@
 
 O ArcMode nasceu para organizar a rotina de forma prática: reunir tarefas, projetos, compromissos, tempo de foco e processos seletivos em uma visão que ajude a decidir o que fazer agora e o que acompanhar depois.
 
-Aplicação publicada: https://neurosync-rpg.pages.dev
+Aplicação publicada: https://arcmode-app.pages.dev
 
 Repositório: https://github.com/Matheus-EQ/arcmode-app
 

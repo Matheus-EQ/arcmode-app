@@ -34,11 +34,11 @@ Não coloque `service_role`, senha de banco ou token administrativo no frontend 
 Em **Supabase > Authentication > URL Configuration**:
 
 ```text
-Site URL: https://neurosync-rpg.pages.dev
+Site URL: https://arcmode-app.pages.dev
 Redirect URLs:
-  https://neurosync-rpg.pages.dev
-  https://neurosync-rpg.pages.dev/app
-  https://neurosync-rpg.pages.dev/reset-password
+  https://arcmode-app.pages.dev
+  https://arcmode-app.pages.dev/app
+  https://arcmode-app.pages.dev/reset-password
 ```
 
 Antes da divulgação pública:
@@ -50,7 +50,7 @@ Antes da divulgação pública:
 
 ## 4. Cloudflare Pages
 
-Use o projeto existente `neurosync-rpg` para preservar a URL.
+Use o projeto existente `arcmode-app` para preservar a URL.
 
 Configuração de build:
 
@@ -72,7 +72,7 @@ VITE_HOTMART_CHECKOUT_URL=
 
 ### Publicação manual pelo painel
 
-No projeto **Cloudflare Pages > neurosync-rpg > Deployments**, selecione **Create deployment**, escolha **Production**, envie a pasta `dist` ou um ZIP do conteúdo dela e confirme **Save and deploy**. Esse fluxo usa a sessão autenticada no navegador e não exige token no PowerShell.
+No projeto **Cloudflare Pages > arcmode-app > Deployments**, selecione **Create deployment**, escolha **Production**, envie a pasta `dist` ou um ZIP do conteúdo dela e confirme **Save and deploy**. Esse fluxo usa a sessão autenticada no navegador e não exige token no PowerShell.
 
 ### Publicação opcional com Wrangler
 
@@ -80,7 +80,7 @@ Após aprovação final:
 
 ```bash
 pnpm build
-pnpm exec wrangler pages deploy dist --project-name neurosync-rpg
+pnpm exec wrangler pages deploy dist --project-name arcmode-app
 ```
 
 O comando requer autenticação local no Cloudflare. Um token só é necessário para automação não interativa; ele não é necessário para a publicação manual pelo painel. Não salve tokens no repositório.

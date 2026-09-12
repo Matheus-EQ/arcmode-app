@@ -4,9 +4,9 @@ $nodePath = Join-Path $HOME ".cache\codex-runtimes\codex-primary-runtime\depende
 $pnpm = Join-Path $HOME ".cache\codex-runtimes\codex-primary-runtime\dependencies\bin\fallback\pnpm.cmd"
 $env:PATH = "$nodePath;$env:PATH"
 
-$projectName = Read-Host "Nome do projeto Cloudflare Pages (ex: neurosync-rpg)"
+$projectName = Read-Host "Nome do projeto Cloudflare Pages (ex: arcmode-app)"
 if ([string]::IsNullOrWhiteSpace($projectName)) {
-  $projectName = "neurosync-rpg"
+  $projectName = "arcmode-app"
 }
 
 $accountId = Read-Host "Cloudflare Account ID"
