@@ -4,13 +4,14 @@ Textos preparados para aprovação. A aplicação e o repositório estão públi
 
 ## Capturas recomendadas
 
-1. **Capa do projeto:** `public/marketing/neurosync-divulgacao-v1.png` — composição dos modos Profissional e RPG.
-2. **Painel Profissional:** `scripts/video-src/professional-desktop.png` — planejamento e capacidade do dia.
-3. **Modo RPG:** `scripts/video-src/rpg-desktop.png` — missões e gamificação.
-4. **Profissional no celular:** `scripts/video-src/professional-mobile.png` — responsividade.
-5. **RPG no celular:** `scripts/video-src/rpg-mobile.png` — navegação móvel gamificada.
+1. **Painel Profissional:** `public/marketing/screenshots/professional-desktop.png` — planejamento, prioridades e capacidade do dia.
+2. **Agenda semanal:** `public/marketing/screenshots/professional-weekly-calendar.png` — tarefas e compromissos no calendário.
+3. **Projetos e processos seletivos:** `public/marketing/screenshots/professional-projects.png` e `public/marketing/screenshots/professional-recruitment.png`.
+4. **Profissional no celular:** `public/marketing/screenshots/professional-mobile.png` — responsividade.
+5. **Modo RPG:** `public/marketing/screenshots/rpg-progress.png`, `rpg-bosses.png` e `rpg-rewards.png` — personagem, evolução, bosses e recompensas.
+6. **RPG no celular:** `public/marketing/screenshots/rpg-mobile.png` — navegação móvel gamificada.
 
-Na publicação, prefira a capa seguida de três capturas: Profissional desktop, RPG desktop e uma tela móvel. A landing e a demonstração local também foram capturadas durante a validação desta versão; gere novamente após o deploy final para que a URL pública e o conteúdo publicado coincidam.
+Na publicação, comece pelo painel Profissional e siga com calendário, projetos e processos seletivos. Use o RPG como diferencial secundário, destacando evolução, bosses e recompensas, e encerre com as telas móveis.
 
 ## Roteiro de demonstração — cerca de 30 segundos
 

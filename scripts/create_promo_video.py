@@ -429,8 +429,8 @@ def create_music(path: Path) -> None:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    audio_path = OUT / "neurosync-promo-10s-trilha.wav"
-    video_path = OUT / "neurosync-promo-10s.mp4"
+    audio_path = OUT / "arcmode-promo-10s-trilha.wav"
+    video_path = OUT / "arcmode-promo-10s.mp4"
     create_music(audio_path)
 
     sys.path.insert(0, str(ROOT / ".video-tools-local"))
@@ -466,7 +466,7 @@ PRO_DESKTOP = Image.open(SRC / "professional-desktop.png").convert("RGB")
 RPG_DESKTOP = generic_rpg_desktop(Image.open(SRC / "rpg-desktop.png").convert("RGB"))
 PRO_MOBILE = Image.open(SRC / "professional-mobile.png").convert("RGB")
 RPG_MOBILE = generic_rpg_mobile(Image.open(SRC / "rpg-mobile.png").convert("RGB"))
-ICON = Image.open(ROOT / "public" / "IconNeuroSyncProfessional.png").convert("RGBA")
+ICON = Image.open(ROOT / "public" / "IconArcMode-512.png").convert("RGBA")
 PRO_MONITOR = monitor(PRO_DESKTOP)
 RPG_MONITOR = monitor(RPG_DESKTOP)
 PRO_PHONE = phone(PRO_MOBILE)

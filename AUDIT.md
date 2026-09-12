@@ -85,7 +85,7 @@ Limite do teste: cadastro real, entrega de e-mail, redefinição efetiva e exclu
 
 ## Git e repositório público
 
-O Git foi inicializado diretamente na pasta `Codigo`, preservando a estrutura original. O repositório público oficial é `https://github.com/Matheus-EQ/neurosync-app`.
+O Git foi inicializado diretamente na pasta `Codigo`, preservando a estrutura original. O repositório público oficial é `https://github.com/Matheus-EQ/arcmode-app`.
 
 O conteúdo versionado inclui código, configurações públicas, documentação, migrações e materiais do projeto. Permanecem excluídos: `.env`, `node_modules`, `dist`, `.wrangler`, caches, logs, PIDs, ZIPs, arquivos de inspeção, `qa-screenshots` e credenciais locais.
 

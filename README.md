@@ -4,7 +4,7 @@ O ArcMode nasceu para organizar a rotina de forma prática: reunir tarefas, proj
 
 Aplicação publicada: https://neurosync-rpg.pages.dev
 
-Repositório: https://github.com/Matheus-EQ/neurosync-app
+Repositório: https://github.com/Matheus-EQ/arcmode-app
 
 Contato: contato.neurosyncapp@gmail.com
 
