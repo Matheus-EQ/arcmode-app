@@ -1,4 +1,4 @@
-# Material de portfólio — NeuroSync
+# Material de portfólio — ArcMode
 
 Textos preparados para aprovação. A aplicação e o repositório estão públicos; o conteúdo de LinkedIn ainda não foi publicado.
 
@@ -14,7 +14,7 @@ Na publicação, prefira a capa seguida de três capturas: Profissional desktop,
 
 ## Roteiro de demonstração — cerca de 30 segundos
 
-**0–4 s:** abrir a landing. “O NeuroSync organiza tarefas, projetos e compromissos em uma rotina executável.”
+**0–4 s:** abrir a landing. “O ArcMode organiza tarefas, projetos e compromissos em uma rotina executável.”
 
 **4–9 s:** clicar em “Experimentar demonstração”. “A demonstração funciona sem cadastro e mantém os dados apenas no navegador.”
 
@@ -28,17 +28,17 @@ Na publicação, prefira a capa seguida de três capturas: Profissional desktop,
 
 ## Seção Projetos do LinkedIn
 
-Desenvolvimento do NeuroSync, uma aplicação web responsiva para organização de tarefas, projetos, compromissos e tempo, com modos Profissional e RPG. O sistema inclui planejamento diário por prioridades, agenda semanal e mensal, recorrência, dependências, divisão em sessões, cronômetro e indicadores de execução. Construído com React e Vite, Supabase para autenticação e persistência com RLS e Cloudflare Pages para hospedagem. O produto também possui demonstração sem cadastro, com dados isolados no navegador.
+Desenvolvimento do ArcMode, uma aplicação web responsiva para organização de tarefas, projetos, compromissos e tempo, com modos Profissional e RPG. O sistema inclui planejamento diário por prioridades, agenda semanal e mensal, recorrência, dependências, divisão em sessões, cronômetro e indicadores de execução. Construído com React e Vite, Supabase para autenticação e persistência com RLS e Cloudflare Pages para hospedagem. O produto também possui demonstração sem cadastro, com dados isolados no navegador.
 
 ## Item em Destaques
 
-NeuroSync — aplicação de produtividade com planejamento diário, agenda integrada, projetos, sessões de foco e duas experiências visuais. Explore a demonstração sem cadastro e conheça o fluxo completo nos modos Profissional e RPG.
+ArcMode — aplicação de produtividade com planejamento diário, agenda integrada, projetos, sessões de foco e duas experiências visuais. Explore a demonstração sem cadastro e conheça o fluxo completo nos modos Profissional e RPG.
 
 ## Post de LinkedIn
 
 Como transformar uma lista de tarefas em um plano que realmente cabe no dia?
 
-Esse foi o problema que guiou o desenvolvimento do NeuroSync, um projeto pessoal de produtividade e planejamento. A aplicação reúne tarefas, projetos e compromissos e usa regras de organização para considerar prioridades, prazos, recorrência, dependências, duração e capacidade disponível.
+Esse foi o problema que guiou o desenvolvimento do ArcMode, um projeto pessoal de produtividade e planejamento. A aplicação reúne tarefas, projetos e compromissos e usa regras de organização para considerar prioridades, prazos, recorrência, dependências, duração e capacidade disponível.
 
 Criei duas formas de usar a mesma rotina:
 

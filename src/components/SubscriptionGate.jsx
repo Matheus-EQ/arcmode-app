@@ -13,7 +13,7 @@ export default function SubscriptionGate({ error, onRefresh, onLogout }) {
         <div className="h-2 bg-blue-600" />
         <div className="p-7 sm:p-10">
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 font-bold text-lg"><Logo size={44} professional className="rounded-xl"/>NeuroSync</div>
+            <div className="flex items-center gap-3 font-bold text-lg"><Logo size={44} className="rounded-xl"/>ArcMode</div>
             <button type="button" onClick={onLogout} className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-950"><LogOut size={16}/>Sair</button>
           </div>
 
@@ -38,7 +38,7 @@ export default function SubscriptionGate({ error, onRefresh, onLogout }) {
           </div>
 
           {!checkoutReady && <p className="mt-5 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-4">A venda ainda está em preparação. O acesso pago só será ativado depois que o checkout estiver testado.</p>}
-          <p className="mt-8 text-sm text-slate-500">A compra e a conta do NeuroSync devem usar o mesmo endereço de e-mail. Suporte: <a className="font-medium text-blue-700 hover:text-blue-900" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
+          <p className="mt-8 text-sm text-slate-500">A compra e a conta do ArcMode devem usar o mesmo endereço de e-mail. Suporte: <a className="font-medium text-blue-700 hover:text-blue-900" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p>
         </div>
       </section>
     </main>

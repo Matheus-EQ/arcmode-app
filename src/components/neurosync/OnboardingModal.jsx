@@ -31,7 +31,7 @@ export default function OnboardingModal({ user, onCreate, isCreating }) {
         <div className="space-y-6">
           <div>
             <label className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-2 block">
-              Nome no NeuroSync
+              Nome no ArcMode
             </label>
             <input
               autoFocus

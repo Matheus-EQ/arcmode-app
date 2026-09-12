@@ -30,7 +30,7 @@ export default function ExperienceModeModal({ currentMode, required = false, onS
         <div className="text-center mb-8">
           <Sparkles size={28} className="mx-auto text-blue-400 mb-3" />
           <p className="text-[9px] font-black text-blue-400 uppercase tracking-[0.35em] mb-2">Uma conta, duas experiências</p>
-          <h2 className="text-2xl sm:text-3xl text-white font-black uppercase tracking-tight">Como você quer usar o NeuroSync?</h2>
+          <h2 className="text-2xl sm:text-3xl text-white font-black uppercase tracking-tight">Como você quer usar o ArcMode?</h2>
           <p className="text-xs text-slate-400 mt-3">Você poderá trocar de modo depois sem perder tarefas ou projetos.</p>
         </div>
 

@@ -65,6 +65,8 @@ import {
 } from '@/lib/neurosync-session';
 
 const XP_PER_LEVEL = 1000;
+const PROFESSIONAL_VIEWS = ['overview', 'diarias', 'inbox', 'bosses', 'recruitment', 'calendar', 'historico', 'perfil'];
+const RPG_VIEWS = ['diarias', 'calendar', 'bosses', 'historico', 'mercado', 'perfil'];
 
 // Sound feedback
 function playSound(type) {
@@ -110,8 +112,10 @@ function sendNotification(title, body) {
 export default function NeuroSync() {
   const qc = useQueryClient();
   const { logout, deleteAccount } = useAuth();
-  const requestedTab = new URLSearchParams(window.location.search).get('view');
-  const [activeTab, setActiveTab] = useState(requestedTab === 'calendar' ? 'calendar' : 'diarias');
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedTab = urlParams.get('view');
+  const requestedMode = urlParams.get('mode');
+  const [activeTab, setActiveTab] = useState(requestedTab || 'diarias');
   const [showAddDaily, setShowAddDaily] = useState(false);
   const [showAddBoss, setShowAddBoss] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
@@ -210,10 +214,12 @@ export default function NeuroSync() {
   // Keep the selected experience on this device without changing the database schema.
   useEffect(() => {
     if (!uid) return;
-    const savedMode = readExperienceMode(uid) || 'professional';
+    const savedMode = ['professional', 'rpg'].includes(requestedMode) ? requestedMode : readExperienceMode(uid) || 'professional';
+    if (isDemoSession && requestedMode) saveExperienceMode(uid, savedMode);
     setExperienceMode(savedMode);
     setShowExperienceMode(false);
-    if (savedMode === 'professional') setActiveTab(requestedTab === 'calendar' ? 'calendar' : 'overview');
+    if (savedMode === 'professional') setActiveTab(PROFESSIONAL_VIEWS.includes(requestedTab) ? requestedTab : 'overview');
+    if (savedMode === 'rpg') setActiveTab(RPG_VIEWS.includes(requestedTab) ? requestedTab : 'diarias');
   }, [uid]);
 
   useEffect(() => {
@@ -376,7 +382,7 @@ export default function NeuroSync() {
     if (leveled) {
       setLevelUpData(level);
       createLog.mutate({ date: new Date().toISOString().split('T')[0], text: `Level Up! Agora é nível ${level}`, type: 'level' });
-      sendNotification('⚡ NEUROSYNC — LEVEL UP!', `Você atingiu o nível ${level}!`);
+      sendNotification('⚡ ARCMODE — LEVEL UP!', `Você atingiu o nível ${level}!`);
     }
   }, []);
 

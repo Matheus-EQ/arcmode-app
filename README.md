@@ -1,6 +1,6 @@
-# NeuroSync — organização profissional em um só lugar
+# ArcMode — organização profissional em um só lugar
 
-O NeuroSync nasceu para organizar a rotina de forma prática: reunir tarefas, projetos, compromissos, tempo de foco e processos seletivos em uma visão que ajude a decidir o que fazer agora e o que acompanhar depois.
+O ArcMode nasceu para organizar a rotina de forma prática: reunir tarefas, projetos, compromissos, tempo de foco e processos seletivos em uma visão que ajude a decidir o que fazer agora e o que acompanhar depois.
 
 Aplicação publicada: https://neurosync-rpg.pages.dev
 
@@ -14,7 +14,7 @@ Aplicação web responsiva com o **Modo Profissional como experiência principal
 
 ## Problema
 
-Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como compromissos, dependências e prioridades disputam tempo. O NeuroSync reúne esses elementos e aplica regras de planejamento para formar uma visão executável da rotina.
+Listas de tarefas isoladas não mostram, por si só, o que cabe no dia nem como compromissos, dependências e prioridades disputam tempo. O ArcMode reúne esses elementos e aplica regras de planejamento para formar uma visão executável da rotina.
 
 ## Funcionalidades
 
@@ -64,6 +64,14 @@ No modo demonstração, um usuário fictício e coleções próprias são criado
 
 ![Calendário semanal do Modo Profissional](public/marketing/screenshots/professional-weekly-calendar.png)
 
+### Projetos — etapas e progresso
+
+![Projetos fictícios do Modo Profissional](public/marketing/screenshots/professional-projects.png)
+
+### Processos seletivos — testes e entrevistas na agenda
+
+![Processos seletivos fictícios das empresas A e B](public/marketing/screenshots/professional-recruitment.png)
+
 ### Modo Profissional no celular
 
 <p align="center">
@@ -72,8 +80,25 @@ No modo demonstração, um usuário fictício e coleções próprias são criado
 
 ### Visualização alternativa — Modo RPG
 
+O modo RPG transforma a execução em evolução de personagem, atributos, bosses e recompensas, sem alterar os dados usados no modo profissional.
+
+#### Personagem, níveis e atributos
+
 <p align="center">
-  <img src="public/marketing/screenshots/rpg-desktop.png" width="520" alt="Prévia do Modo RPG" />
+  <img src="public/marketing/screenshots/rpg-progress.png" width="760" alt="Evolução de personagem no Modo RPG" />
+</p>
+
+#### Bosses e recompensas
+
+<p align="center">
+  <img src="public/marketing/screenshots/rpg-bosses.png" width="480" alt="Bosses fictícios no Modo RPG" />
+  <img src="public/marketing/screenshots/rpg-rewards.png" width="480" alt="Central de recompensas do Modo RPG" />
+</p>
+
+#### Modo RPG no celular
+
+<p align="center">
+  <img src="public/marketing/screenshots/rpg-mobile.png" width="280" alt="Evolução do personagem no celular" />
 </p>
 
 ## Instalação local
@@ -112,7 +137,7 @@ pnpm preview    # prévia do build
 ```text
 src/
   api/          cliente de dados e autenticação
-  components/   interface compartilhada e recursos do NeuroSync
+  components/   interface compartilhada e recursos do ArcMode
   lib/          planejamento, sessão, demonstração e utilitários
   pages/        landing, autenticação, páginas legais e aplicativo
 supabase/        schema, migrações e modelos de e-mail

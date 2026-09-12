@@ -1,18 +1,17 @@
 import React from 'react';
 
-// NeuroSync logo — uses the official brand icon asset.
-const LOGO_URL = '/IconNeuroSync.png';
-const PROFESSIONAL_LOGO_URL = '/IconNeuroSyncProfessional.png';
+// ArcMode logo — one journey, with Professional and RPG experiences.
+const LOGO_URL = '/IconArcMode-512.png';
 
-export default function Logo({ size = 44, className = '', professional = false }) {
+export default function Logo({ size = 44, className = '' }) {
   return (
     <img
-      src={professional ? PROFESSIONAL_LOGO_URL : LOGO_URL}
-      alt="NeuroSync"
+      src={LOGO_URL}
+      alt="ArcMode"
       width={size}
       height={size}
       className={className}
-      style={{ width: size, height: size, display: 'block', objectFit: 'cover' }}
+      style={{ width: size, height: size, display: 'block', objectFit: 'contain' }}
     />
   );
 }

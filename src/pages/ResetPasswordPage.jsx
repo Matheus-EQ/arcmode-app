@@ -24,7 +24,7 @@ export default function ResetPasswordPage() {
     setIsSubmitting(true);
     try {
       await updatePassword({ password });
-      setNotice('Senha atualizada. Você já pode voltar ao NeuroSync.');
+      setNotice('Senha atualizada. Você já pode voltar ao ArcMode.');
     } catch (updateError) {
       setError(updateError?.message || 'Não foi possível atualizar sua senha agora.');
     } finally {
@@ -37,7 +37,7 @@ export default function ResetPasswordPage() {
       <section className="auth-card bg-white border border-slate-200 rounded-3xl p-6 sm:p-9 shadow-xl overflow-hidden">
 
         <div className="text-center mb-8">
-          <Logo size={56} professional className="mx-auto rounded-2xl mb-4" />
+          <Logo size={56} className="mx-auto rounded-2xl mb-4" />
           <p className="text-xs font-semibold text-blue-700 uppercase tracking-[0.16em]">Acesso profissional</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">Definir nova senha</h1>
           <p className="mt-2 text-sm text-slate-600">Escolha uma senha segura para voltar ao seu workspace.</p>

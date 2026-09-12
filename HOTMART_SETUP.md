@@ -1,6 +1,6 @@
 # Preparação comercial com a Hotmart
 
-O NeuroSync continua hospedado no Cloudflare Pages. A Hotmart cuida da oferta,
+O ArcMode continua hospedado no Cloudflare Pages. A Hotmart cuida da oferta,
 checkout e cobrança; o Supabase recebe os eventos e decide se a conta pode abrir
 o workspace.
 
@@ -34,7 +34,7 @@ Crie um produto de assinatura na Hotmart e configure, inicialmente:
 - plano mensal;
 - plano anual com desconto;
 - e-mail de suporte `contato.neurosyncapp@gmail.com`;
-- página externa apontando para a apresentação do NeuroSync;
+- página externa apontando para a apresentação do ArcMode;
 - checkout oficial da Hotmart.
 
 Depois, copie apenas a URL pública do checkout para
@@ -60,7 +60,7 @@ Use primeiro o ambiente de testes da Hotmart e uma conta de teste separada.
 Confirme no Supabase:
 
 1. compra aprovada cria uma licença `active`;
-2. o e-mail da compra é o mesmo da conta NeuroSync;
+2. o e-mail da compra é o mesmo da conta ArcMode;
 3. a conta consegue abrir o workspace;
 4. reembolso e chargeback revogam o acesso;
 5. cancelamento preserva o acesso apenas até `access_until`, quando informado;

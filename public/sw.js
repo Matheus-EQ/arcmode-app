@@ -1,5 +1,5 @@
-const CACHE_NAME = 'neurosync-shell-v1';
-const APP_SHELL = ['/', '/manifest.json', '/IconNeuroSync.png', '/IconNeuroSync-192.png'];
+const CACHE_NAME = 'arcmode-shell-v1';
+const APP_SHELL = ['/', '/manifest.json', '/IconArcMode-512.png', '/IconArcMode-192.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

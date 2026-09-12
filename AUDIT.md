@@ -1,4 +1,4 @@
-# Auditoria técnica do NeuroSync
+# Auditoria técnica do ArcMode
 
 Data da revisão: 10 de setembro de 2026.
 

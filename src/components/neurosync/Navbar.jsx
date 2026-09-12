@@ -18,11 +18,11 @@ export default function Navbar({ player, experienceMode, onModeOpen, onCalendarO
             <div className="relative flex items-center justify-center">
               {!professional && <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:bg-primary/40 transition-all"></div>}
               <div className={`relative z-10 rounded-full overflow-hidden group-hover:scale-105 transition-transform duration-300 ${professional ? 'bg-white border border-slate-200 shadow-sm' : 'shadow-2xl ring-1 ring-primary/30'}`}>
-                <Logo size={professional ? 38 : 44} professional={professional} />
+                <Logo size={professional ? 38 : 44} />
               </div>
             </div>
             <div className="hidden sm:block">
-              <h1 className={`text-lg md:text-2xl tracking-tighter leading-none ${professional ? 'font-semibold text-slate-900' : 'font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent'}`}>NEUROSYNC</h1>
+              <h1 className={`text-lg md:text-2xl tracking-tighter leading-none ${professional ? 'font-semibold text-slate-900' : 'font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent'}`}>ARCMODE</h1>
               <p className={`text-[7px] md:text-[8px] font-bold tracking-[0.3em] uppercase flex items-center gap-1 ${professional ? 'text-slate-500' : 'text-muted-foreground'}`}>{professional ? 'Workspace Profissional' : 'Herói Sincronizado'} <span className="w-1 h-1 bg-emerald-500 rounded-full"></span></p>
             </div>
           </div>

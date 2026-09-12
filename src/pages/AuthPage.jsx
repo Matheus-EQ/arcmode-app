@@ -48,7 +48,7 @@ export default function AuthPage({ initialMode = 'signin' }) {
         setNotice('Se este email estiver cadastrado, enviaremos um link para redefinir sua senha.');
       } else if (isSignup) {
         await signUp({ name: name.trim(), email: email.trim(), password });
-        setNotice('Link de ativação enviado. Confirme seu email para liberar seu painel NeuroSync.');
+        setNotice('Link de ativação enviado. Confirme seu email para liberar seu painel ArcMode.');
       } else {
         await signIn({ email: email.trim(), password });
       }
@@ -65,7 +65,7 @@ export default function AuthPage({ initialMode = 'signin' }) {
         <aside className="hidden md:flex bg-slate-950 text-white p-10 flex-col justify-between relative overflow-hidden">
           <div className="absolute -top-24 -right-20 w-64 h-64 rounded-full bg-blue-500/15 blur-3xl" />
           <div className="relative">
-            <Link to="/" className="inline-flex items-center gap-3 font-bold text-lg"><Logo size={44} professional className="rounded-xl" />NeuroSync</Link>
+            <Link to="/" className="inline-flex items-center gap-3 font-bold text-lg"><Logo size={44} className="rounded-xl" />ArcMode</Link>
             <div className="mt-16 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-300"><BriefcaseBusiness size={16}/>Modo Profissional</div>
             <h2 className="mt-4 text-3xl font-bold tracking-tight leading-tight">Organize sua rotina com clareza.</h2>
             <p className="mt-4 text-sm leading-relaxed text-slate-300">Tarefas, projetos, agenda e processos seletivos reunidos em um workspace profissional.</p>
@@ -78,14 +78,14 @@ export default function AuthPage({ initialMode = 'signin' }) {
 
         <div className="p-6 sm:p-9 md:p-10">
           <div className="md:hidden flex items-center justify-between mb-8">
-            <Link to="/" className="inline-flex items-center gap-2 font-bold"><Logo size={40} professional className="rounded-xl" />NeuroSync</Link>
+            <Link to="/" className="inline-flex items-center gap-2 font-bold"><Logo size={40} className="rounded-xl" />ArcMode</Link>
             <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-blue-700"><BriefcaseBusiness size={14}/>Profissional</span>
           </div>
 
           <div className="mb-8">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">Acesso ao workspace</p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-              {isReset ? 'Recuperar senha' : isSignup ? 'Criar sua conta' : 'Entrar no NeuroSync'}
+              {isReset ? 'Recuperar senha' : isSignup ? 'Criar sua conta' : 'Entrar no ArcMode'}
             </h1>
             <p className="mt-2 text-sm text-slate-600">{isReset ? 'Enviaremos as instruções para o seu e-mail.' : isSignup ? 'Comece pelo Modo Profissional e altere a experiência quando quiser.' : 'Continue de onde parou no seu workspace.'}</p>
           </div>

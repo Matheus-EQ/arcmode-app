@@ -1,4 +1,4 @@
-# Publicação do NeuroSync
+# Publicação do ArcMode
 
 Este documento descreve o processo atual: frontend Vite estático no Cloudflare Pages e autenticação/persistência no Supabase. Não publique antes de validar o ambiente local e obter aprovação do responsável pelo projeto.
 

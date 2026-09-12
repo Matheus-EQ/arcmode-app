@@ -19,9 +19,9 @@ export function initializeDemoData() {
   const now = new Date();
   const today = getLocalDateKey(now);
   const tomorrow = getLocalDateKey(shiftLocalDate(now, 1));
+  const dayAfterTomorrow = getLocalDateKey(shiftLocalDate(now, 2));
   const yesterday = getLocalDateKey(shiftLocalDate(now, -1));
   const created = iso(shiftLocalDate(now, -12));
-  const weekdays = [1, 2, 3, 4, 5];
   const mondayOffset = now.getDay() === 0 ? -6 : 1 - now.getDay();
   const monday = getLocalDateKey(shiftLocalDate(now, mondayOffset));
   const tuesday = getLocalDateKey(shiftLocalDate(now, mondayOffset + 1));
@@ -30,29 +30,29 @@ export function initializeDemoData() {
 
   const player = {
     id: 'demo-player', created_by_id: DEMO_USER_ID, created_date: created, updated_date: iso(now),
-    name: 'Visitante Demo', level: 4, xp: 640, maxXp: 1000, hp: 92, coins: 780, streak: 6,
+    name: 'Visitante Demo', level: 8, xp: 720, maxXp: 1000, hp: 92, coins: 1280, streak: 12,
     lastCycleDate: getLocalDateKey(shiftLocalDate(now, -1)), avatar: 'default', theme: 'purple',
     attributes: { intelecto: 4, fisico: 2, disciplina: 5, emocional: 3, social: 3, profissional: 5 },
     attrXp: { intelecto: 62, fisico: 35, disciplina: 78, emocional: 44, social: 51, profissional: 83 }
   };
 
   const dailies = [
-    { id: 'demo-task-1', title: 'Revisar apresentação do projeto', attribute: 'profissional', type: 'timer', duration: 45, days: weekdays, completed: false },
-    { id: 'demo-task-2', title: 'Responder mensagens prioritárias', attribute: 'social', type: 'task', duration: 20, days: weekdays, completed: true },
-    { id: 'demo-task-3', title: 'Planejar as três prioridades do dia', attribute: 'disciplina', type: 'task', duration: 15, days: weekdays, completed: true },
-    { id: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', attribute: 'profissional', type: 'timer', duration: 60, days: [], completed: false },
+    { id: 'demo-task-1', title: 'Revisar apresentação do projeto', attribute: 'profissional', type: 'timer', duration: 45, days: [0, 1, 2, 3, 4, 5, 6], completed: false },
+    { id: 'demo-task-2', title: 'Responder mensagens prioritárias', attribute: 'social', type: 'task', duration: 20, days: [0, 1, 2, 3, 4, 5, 6], completed: true },
+    { id: 'demo-task-3', title: 'Planejar as três prioridades do dia', attribute: 'disciplina', type: 'task', duration: 15, days: [0, 1, 2, 3, 4, 5, 6], completed: true },
+    { id: 'demo-task-4', title: 'Preparar apresentação do projeto', attribute: 'profissional', type: 'timer', duration: 60, days: [0, 1, 2, 3, 4, 5, 6], completed: false },
     { id: 'demo-task-5', title: 'Caminhada e pausa sem telas', attribute: 'fisico', type: 'timer', duration: 30, days: [0, 2, 4, 6], completed: false },
     { id: 'demo-task-6', title: 'Organizar anotações da semana', attribute: 'intelecto', type: 'task', duration: 25, days: [], completed: false }
   ].map((item, index) => ({ ...item, created_by_id: DEMO_USER_ID, created_date: iso(shiftLocalDate(now, -(8 - index))), updated_date: iso(now) }));
 
   const bosses = [
-    { id: 'demo-project-1', name: 'Portfólio NeuroSync', description: 'Preparar o produto e os materiais para apresentação profissional.', date: tomorrow, hp: 55, maxHp: 100, color: 'text-blue-500', xpReward: 1000, coinReward: 500, subtasks: [{ id: 's1', title: 'Landing page', completed: true }, { id: 's2', title: 'Modo demonstração', completed: true }, { id: 's3', title: 'Capturas finais', completed: false }] },
+    { id: 'demo-project-1', name: 'Lançamento do portfólio', description: 'Preparar materiais e uma apresentação profissional do projeto.', date: tomorrow, hp: 55, maxHp: 100, color: 'text-blue-500', xpReward: 1000, coinReward: 500, subtasks: [{ id: 's1', title: 'Revisar apresentação', completed: true }, { id: 's2', title: 'Validar demonstração', completed: true }, { id: 's3', title: 'Capturas finais', completed: false }] },
     { id: 'demo-project-2', name: 'Rotina de estudos', description: 'Consolidar leituras e exercícios da semana.', date: tomorrow, hp: 80, maxHp: 100, color: 'text-purple-500', xpReward: 700, coinReward: 350, subtasks: [{ id: 's4', title: 'Revisar notas', completed: true }, { id: 's5', title: 'Praticar exercícios', completed: false }] }
   ].map((item, index) => ({ ...item, created_by_id: DEMO_USER_ID, created_date: iso(shiftLocalDate(now, -(10 - index))), updated_date: iso(now) }));
 
   const history = [
     { id: 'demo-history-1', date: getLocalDateKey(shiftLocalDate(now, -1)), text: 'Dia concluído com 4 de 5 prioridades', type: 'victory' },
-    { id: 'demo-history-2', date: getLocalDateKey(shiftLocalDate(now, -3)), text: 'Projeto Portfólio NeuroSync avançou', type: 'level' },
+    { id: 'demo-history-2', date: getLocalDateKey(shiftLocalDate(now, -3)), text: 'Projeto Lançamento do portfólio avançou', type: 'level' },
     { id: 'demo-history-3', date: getLocalDateKey(shiftLocalDate(now, -5)), text: 'Sequência de foco mantida', type: 'victory' }
   ].map((item) => ({ ...item, created_by_id: DEMO_USER_ID, created_date: `${item.date}T18:00:00.000Z`, updated_date: iso(now) }));
 
@@ -65,31 +65,47 @@ export function initializeDemoData() {
     'demo-task-6': { priority: 'medium', dueDate: tomorrow, dueTime: '', projectId: 'demo-project-2', notes: '', inbox: true, recurrence: 'once', subtasks: [], estimateMinutes: 25, scheduleMode: 'flexible', flexibleStart: '08:00', flexibleEnd: '18:00', splittable: false, minSessionMinutes: 25, dependencyIds: [] }
   };
 
-  const recruitmentProcesses = [{
-    id: 'demo-recruitment-1',
-    role: 'Analista de Produto Júnior',
-    company: 'Empresa Horizonte',
-    location: 'Híbrido · Rio de Janeiro',
-    description: 'Processo para atuar com organização de backlog, análise de indicadores e melhoria contínua da experiência do produto.',
-    status: 'interview',
-    createdAt: created,
-    updatedAt: iso(now),
-    stages: [
-      { id: 'demo-stage-1', type: 'Entrevista com RH', date: yesterday, time: '10:00', duration: 45, notes: 'Conversa inicial sobre perfil e disponibilidade.', completed: true },
-      { id: 'demo-stage-2', type: 'Entrevista com liderança', date: tomorrow, time: '15:00', duration: 60, notes: 'Preparar exemplos de projetos e resultados.', completed: false }
-    ]
-  }];
+  const recruitmentProcesses = [
+    {
+      id: 'demo-recruitment-1',
+      role: 'Analista de Produto Júnior',
+      company: 'Empresa A',
+      location: 'Híbrido · São Paulo',
+      description: 'Processo fictício para atuar com organização de backlog, análise de indicadores e melhoria contínua da experiência do produto.',
+      status: 'interview',
+      createdAt: created,
+      updatedAt: iso(now),
+      stages: [
+        { id: 'demo-stage-1', type: 'Entrevista com RH', date: yesterday, time: '10:00', duration: 45, notes: 'Conversa inicial sobre perfil e disponibilidade.', completed: true },
+        { id: 'demo-stage-2', type: 'Entrevista com liderança', date: tomorrow, time: '15:00', duration: 60, notes: 'Preparar exemplos de projetos e resultados.', completed: false }
+      ]
+    },
+    {
+      id: 'demo-recruitment-2',
+      role: 'Assistente de Projetos',
+      company: 'Empresa B',
+      location: 'Remoto',
+      description: 'Processo fictício para apoiar cronogramas, documentação e comunicação entre equipes.',
+      status: 'test',
+      createdAt: created,
+      updatedAt: iso(now),
+      stages: [
+        { id: 'demo-stage-3', type: 'Triagem de currículo', date: yesterday, time: '14:00', duration: 30, notes: '', completed: true },
+        { id: 'demo-stage-4', type: 'Teste técnico', date: dayAfterTomorrow, time: '09:30', duration: 90, notes: 'Revisar instruções enviadas por e-mail.', completed: false }
+      ]
+    }
+  ];
 
   const professionalData = {
     version: 5, updatedAt: iso(now), taskMeta, timeLogs: [{ id: 'demo-time-1', taskId: 'demo-task-1', minutes: 32, date: today }],
     activity: history.map((item) => ({ id: `activity-${item.id}`, text: item.text, date: item.date, type: item.type })),
-    weeklyPlans: {}, dailyPlans: { [today]: ['demo-task-3', 'demo-task-1', 'demo-task-4'] },
+    weeklyPlans: {}, dailyPlans: { [today]: { topTaskIds: ['demo-task-3', 'demo-task-1', 'demo-task-4'] } },
     scheduleBlocks: {
       [monday]: [{ id: 'block-mon-1', taskId: 'demo-task-3', title: 'Planejar prioridades da semana', start: '08:30', duration: 30 }, { id: 'block-mon-2', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '10:00', duration: 60 }],
       [tuesday]: [{ id: 'block-tue-1', taskId: 'demo-task-2', title: 'Responder mensagens prioritárias', start: '09:00', duration: 30 }, { id: 'block-tue-2', taskId: 'demo-task-6', title: 'Organizar anotações da semana', start: '15:00', duration: 45 }],
-      [wednesday]: [{ id: 'block-wed-1', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '09:30', duration: 60 }, { id: 'block-wed-2', taskId: 'demo-task-5', title: 'Caminhada e pausa sem telas', start: '17:00', duration: 30 }],
+      [wednesday]: [{ id: 'block-wed-1', taskId: 'demo-task-4', title: 'Preparar apresentação do projeto', start: '09:30', duration: 60 }, { id: 'block-wed-2', taskId: 'demo-task-5', title: 'Caminhada e pausa sem telas', start: '17:00', duration: 30 }],
       [thursday]: [{ id: 'block-thu-1', taskId: 'demo-task-1', title: 'Ajustar materiais do portfólio', start: '14:00', duration: 75 }],
-      [today]: [{ id: 'block-1', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '09:00', duration: 45 }, { id: 'block-2', taskId: 'demo-task-4', title: 'Preparar demonstração do NeuroSync', start: '14:00', duration: 60 }]
+      [today]: [{ id: 'block-1', taskId: 'demo-task-1', title: 'Revisar apresentação do projeto', start: '09:00', duration: 45 }, { id: 'block-2', taskId: 'demo-task-4', title: 'Preparar apresentação do projeto', start: '14:00', duration: 60 }]
     },
     commitments: [
       { id: 'demo-commitment-mon', title: 'Reunião de planejamento', date: monday, start: '13:30', duration: 45, recurrence: 'once' },
@@ -98,7 +114,8 @@ export function initializeDemoData() {
       { id: 'demo-commitment-thu', title: 'Mentoria de carreira', date: thursday, start: '10:30', duration: 60, recurrence: 'once' },
       { id: 'demo-commitment-1', title: 'Reunião de alinhamento', date: today, start: '11:00', duration: 45, recurrence: 'once' },
       { id: 'demo-commitment-2', title: 'Revisão semanal', startDate: today, endDate: '', start: '16:30', duration: 30, recurrence: 'custom', days: [5] },
-      { id: 'recruitment:demo-recruitment-1:demo-stage-2', title: 'Entrevista com liderança: Empresa Horizonte — Analista de Produto Júnior', date: tomorrow, startDate: tomorrow, start: '15:00', duration: 60, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-1', recruitmentStageId: 'demo-stage-2' }
+      { id: 'recruitment:demo-recruitment-1:demo-stage-2', title: 'Entrevista com liderança: Empresa A — Analista de Produto Júnior', date: tomorrow, startDate: tomorrow, start: '15:00', duration: 60, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-1', recruitmentStageId: 'demo-stage-2' },
+      { id: 'recruitment:demo-recruitment-2:demo-stage-4', title: 'Teste técnico: Empresa B — Assistente de Projetos', date: dayAfterTomorrow, startDate: dayAfterTomorrow, start: '09:30', duration: 90, recurrence: 'once', days: [], kind: 'recruitment', recruitmentProcessId: 'demo-recruitment-2', recruitmentStageId: 'demo-stage-4' }
     ],
     recruitmentProcesses,
     occurrences: {}, preferences: { workdayStart: 8, workdayEnd: 18, breakMinutes: 60, defaultTaskMinutes: 30 }

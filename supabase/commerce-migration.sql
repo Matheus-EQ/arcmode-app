@@ -1,4 +1,4 @@
--- Base comercial do NeuroSync.
+-- Base comercial do ArcMode.
 -- A cobrança nasce desativada e só deve ser habilitada após o teste completo
 -- do checkout e dos webhooks da Hotmart.
 

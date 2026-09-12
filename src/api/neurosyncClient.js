@@ -19,7 +19,7 @@ const getLocalUser = () => {
   return {
     id,
     email: `${id}@neurosync.dev`,
-    full_name: id === 'local-user' ? 'Local NeuroSync' : id
+    full_name: id === 'local-user' ? 'ArcMode local' : id
   };
 };
 
