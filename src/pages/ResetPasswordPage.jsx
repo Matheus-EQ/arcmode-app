@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { Lock, Save } from 'lucide-react';
+import { ArrowRight, CircleCheck, Lock, Save } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Logo from '@/components/neurosync/Logo';
 import { useAuth } from '@/lib/AuthContext';
 
 export default function ResetPasswordPage() {
-  const { updatePassword } = useAuth();
+  const { updatePassword, logout } = useAuth();
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState('');
   const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
-    setNotice('');
 
     if (password !== confirmation) {
       setError('As senhas não conferem.');
@@ -24,7 +24,10 @@ export default function ResetPasswordPage() {
     setIsSubmitting(true);
     try {
       await updatePassword({ password });
-      setNotice('Senha atualizada. Você já pode voltar ao ArcMode.');
+      await logout(false);
+      setPassword('');
+      setConfirmation('');
+      setIsComplete(true);
     } catch (updateError) {
       setError(updateError?.message || 'Não foi possível atualizar sua senha agora.');
     } finally {
@@ -43,7 +46,23 @@ export default function ResetPasswordPage() {
           <p className="mt-2 text-sm text-slate-600">Escolha uma senha segura para voltar ao seu workspace.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {isComplete ? (
+          <div className="text-center">
+            <div className="mx-auto w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <CircleCheck size={30} />
+            </div>
+            <h2 className="mt-5 text-xl font-bold text-slate-950">Senha alterada com sucesso</h2>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">
+              Sua nova senha já está ativa. Entre novamente para acessar seu workspace.
+            </p>
+            <Link
+              to="/entrar"
+              className="mt-6 w-full bg-slate-950 hover:bg-slate-800 py-3.5 rounded-xl text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+            >
+              Entrar na conta <ArrowRight size={16} />
+            </Link>
+          </div>
+        ) : <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block">
             <span className="text-xs font-semibold text-slate-700 mb-2 flex items-center gap-2">
               <Lock size={14} /> Senha
@@ -75,8 +94,6 @@ export default function ResetPasswordPage() {
           </label>
 
           {error && <p className="text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-xl p-3">{error}</p>}
-          {notice && <p className="text-sm font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl p-3">{notice}</p>}
-
           <button
             type="submit"
             disabled={isSubmitting}
@@ -85,7 +102,7 @@ export default function ResetPasswordPage() {
             <Save size={16} />
             {isSubmitting ? 'Atualizando...' : 'Salvar Senha'}
           </button>
-        </form>
+        </form>}
       </section>
     </main>
   );

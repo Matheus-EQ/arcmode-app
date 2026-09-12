@@ -3,86 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ative seu acesso ao ArcMode</title>
+    <title>Confirme seu e-mail no ArcMode</title>
   </head>
-  <body style="margin:0;padding:0;background:#070a12;color:#f8fafc;font-family:Inter,Arial,sans-serif;">
-    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">
-      Confirme seu email para liberar seu painel, tarefas, projetos e progresso privado no ArcMode.
-    </div>
-
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#070a12;padding:28px 12px;">
-      <tr>
-        <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#0c1020;border:1px solid #20263d;border-radius:28px;overflow:hidden;">
-            <tr>
-              <td style="height:5px;background:linear-gradient(90deg,#2563eb,#8b5cf6,#ec4899);"></td>
-            </tr>
-
-            <tr>
-              <td style="padding:34px 28px 14px;text-align:center;">
-                <img
-                  src="{{ .SiteURL }}/IconArcMode-192.png"
-                  width="76"
-                  height="76"
-                  alt="ArcMode"
-                  style="display:block;margin:0 auto 18px;border-radius:22px;border:1px solid #2b3352;background:#090b14;"
-                />
-                <div style="font-size:11px;line-height:1.4;font-weight:900;letter-spacing:4px;text-transform:uppercase;color:#a78bfa;">
-                  ArcMode
-                </div>
-                <h1 style="margin:10px 0 0;font-size:30px;line-height:1.1;font-weight:900;letter-spacing:0;color:#ffffff;">
-                  Ative sua conta
-                </h1>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:14px 34px 8px;">
-                <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#cbd5e1;">
-                  Seu protocolo neural est&aacute; quase pronto. Confirme seu email para liberar seu painel, miss&otilde;es, bosses, recompensas e progresso privado.
-                </p>
-                <p style="margin:0 0 22px;font-size:14px;line-height:1.6;color:#94a3b8;">
-                  Conta: <strong style="color:#e2e8f0;">{{ .Email }}</strong>
-                </p>
-
-                <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 24px;">
-                  <tr>
-                    <td style="border-radius:16px;background:linear-gradient(90deg,#2563eb,#8b5cf6);box-shadow:0 14px 34px rgba(37,99,235,0.26);">
-                      <a
-                        href="{{ .ConfirmationURL }}"
-                        style="display:inline-block;padding:16px 24px;font-size:13px;line-height:1;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:#ffffff;text-decoration:none;"
-                      >
-                        Confirmar meu email
-                      </a>
-                    </td>
-                  </tr>
-                </table>
-
-                <div style="background:#090b14;border:1px solid #20263d;border-radius:18px;padding:18px;">
-                  <p style="margin:0 0 10px;font-size:13px;line-height:1.6;color:#94a3b8;">
-                    Se o bot&atilde;o n&atilde;o funcionar, copie e cole este link no navegador:
-                  </p>
-                  <a href="{{ .ConfirmationURL }}" style="font-size:13px;line-height:1.6;color:#67e8f9;word-break:break-all;">
-                    {{ .ConfirmationURL }}
-                  </a>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:22px 34px 34px;">
-                <p style="margin:0;font-size:12px;line-height:1.6;color:#64748b;text-align:center;">
-                  Se voc&ecirc; n&atilde;o criou uma conta no ArcMode, pode ignorar este email com seguran&ccedil;a.
-                </p>
-              </td>
-            </tr>
-          </table>
-
-          <p style="margin:18px 0 0;font-size:11px;line-height:1.6;color:#475569;text-align:center;">
-            ArcMode - Organize sua rotina. Construa sua evolu&ccedil;&atilde;o.
-          </p>
-        </td>
-      </tr>
+  <body style="margin:0;padding:0;background:#f1f5f9;color:#0f172a;font-family:Inter,Arial,sans-serif;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">Confirme seu endereço de e-mail para ativar sua conta no ArcMode.</div>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f1f5f9;padding:28px 12px;">
+      <tr><td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #dbe3ef;border-radius:24px;overflow:hidden;box-shadow:0 16px 40px rgba(15,23,42,0.08);">
+          <tr><td style="height:5px;background:#4f46e5;"></td></tr>
+          <tr><td style="padding:34px 30px 12px;text-align:center;">
+            <img src="{{ .SiteURL }}/IconArcMode-192.png" width="72" height="72" alt="ArcMode" style="display:block;margin:0 auto 17px;border-radius:20px;border:1px solid #dbe3ef;background:#0f172a;" />
+            <div style="font-size:11px;line-height:1.4;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#4f46e5;">ArcMode</div>
+            <h1 style="margin:10px 0 0;font-size:28px;line-height:1.15;font-weight:800;color:#0f172a;">Confirme seu e-mail</h1>
+          </td></tr>
+          <tr><td style="padding:16px 32px 8px;">
+            <p style="margin:0 0 16px;font-size:16px;line-height:1.7;color:#475569;">Falta apenas confirmar o endereço <strong style="color:#0f172a;">{{ .Email }}</strong> para ativar sua conta.</p>
+            <p style="margin:0 0 24px;font-size:14px;line-height:1.6;color:#64748b;">Depois da confirmação, você poderá organizar tarefas, projetos, agenda e processos seletivos no seu workspace.</p>
+            <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 24px;"><tr><td style="border-radius:14px;background:#0f172a;"><a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:15px 23px;font-size:14px;line-height:1;font-weight:700;color:#ffffff;text-decoration:none;">Confirmar meu e-mail</a></td></tr></table>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:17px;">
+              <p style="margin:0 0 9px;font-size:12px;line-height:1.6;color:#64748b;">Se o botão não funcionar, copie e cole este endereço no navegador:</p>
+              <a href="{{ .ConfirmationURL }}" style="font-size:12px;line-height:1.6;color:#4f46e5;word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </div>
+          </td></tr>
+          <tr><td style="padding:22px 32px 32px;"><p style="margin:0;font-size:12px;line-height:1.65;color:#64748b;text-align:center;">Se você não criou uma conta no ArcMode, ignore este e-mail com segurança.</p></td></tr>
+        </table>
+        <p style="margin:18px 0 0;font-size:11px;line-height:1.6;color:#64748b;text-align:center;">Mensagem automática de segurança do ArcMode.</p>
+      </td></tr>
     </table>
   </body>
 </html>

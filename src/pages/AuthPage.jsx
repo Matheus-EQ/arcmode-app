@@ -9,11 +9,11 @@ const getAuthErrorMessage = (submitError) => {
   const message = submitError?.message || '';
 
   if (submitError?.status === 429 || code === 'over_email_send_rate_limit' || message.toLowerCase().includes('email rate')) {
-    return 'Limite de emails do Supabase atingido. Aguarde um pouco ou use uma conta já confirmada para testar.';
+    return 'O limite temporário de 2 e-mails por hora do serviço de teste foi atingido. Tente novamente mais tarde.';
   }
 
   if (code === 'email_not_confirmed' || message.toLowerCase().includes('email not confirmed')) {
-    return 'Seu email ainda não foi confirmado. Abra o link de ativação antes de entrar.';
+    return 'Seu e-mail ainda não foi confirmado. Abra o link de ativação antes de entrar.';
   }
 
   if (message.toLowerCase().includes('invalid login credentials')) {
@@ -45,10 +45,10 @@ export default function AuthPage({ initialMode = 'signin' }) {
     try {
       if (isReset) {
         await resetPassword({ email: email.trim() });
-        setNotice('Se este email estiver cadastrado, enviaremos um link para redefinir sua senha.');
+        setNotice('Se este e-mail estiver cadastrado, enviaremos um link para redefinir sua senha.');
       } else if (isSignup) {
         await signUp({ name: name.trim(), email: email.trim(), password });
-        setNotice('Link de ativação enviado. Confirme seu email para liberar seu painel ArcMode.');
+        setNotice('Link de ativação enviado. Confirme seu e-mail para liberar seu painel ArcMode.');
       } else {
         await signIn({ email: email.trim(), password });
       }

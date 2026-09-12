@@ -1018,6 +1018,7 @@ export default function NeuroSync() {
     return (
       <OnboardingModal
         user={currentUser}
+        experienceMode={experienceMode}
         isCreating={createPlayer.isPending}
         onCreate={({ name, avatar }) => {
           createPlayer.mutate({
