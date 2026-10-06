@@ -33,7 +33,7 @@ Crie um produto de assinatura na Hotmart e configure, inicialmente:
 
 - plano mensal;
 - plano anual com desconto;
-- e-mail de suporte `contato.neurosyncapp@gmail.com`;
+- e-mail de suporte `arcmodeapp@gmail.com`;
 - página externa apontando para a apresentação do ArcMode;
 - checkout oficial da Hotmart.
 
@@ -86,5 +86,5 @@ Para interromper a cobrança sem retirar o app do ar, volte
 
 O domínio pode ser conectado depois dos testes. O Gmail criado não é descartado:
 ele continua como caixa de recuperação e pode receber mensagens encaminhadas de
-`contato@neurosyncapp.com.br`. Quando houver domínio, configure também SMTP no
+`contato@arcmodeapp.com.br`. Quando houver domínio, configure também SMTP no
 Supabase e atualize as URLs de redirecionamento.

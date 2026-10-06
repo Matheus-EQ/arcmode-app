@@ -2,7 +2,7 @@ import { ArrowRight, CreditCard, LogOut, RefreshCw, ShieldCheck } from 'lucide-r
 import Logo from '@/components/neurosync/Logo';
 import { hotmartCheckoutUrl } from '@/api/neurosyncClient';
 
-const SUPPORT_EMAIL = 'contato.neurosyncapp@gmail.com';
+const SUPPORT_EMAIL = 'arcmodeapp@gmail.com';
 
 export default function SubscriptionGate({ error, onRefresh, onLogout }) {
   const checkoutReady = /^https:\/\//i.test(hotmartCheckoutUrl);

@@ -4,10 +4,10 @@ import Logo from '@/components/neurosync/Logo';
 
 const supportLink = (
   <a
-    href="mailto:contato.neurosyncapp@gmail.com"
+    href="mailto:arcmodeapp@gmail.com"
     className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-900"
   >
-    contato.neurosyncapp@gmail.com
+    arcmodeapp@gmail.com
   </a>
 );
 

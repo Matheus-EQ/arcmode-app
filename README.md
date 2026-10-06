@@ -6,7 +6,7 @@ Aplicação publicada: https://arcmode-app.pages.dev
 
 Repositório: https://github.com/Matheus-EQ/arcmode-app
 
-Contato: contato.neurosyncapp@gmail.com
+Contato: arcmodeapp@gmail.com
 
 Aplicação web responsiva com o **Modo Profissional como experiência principal** e uma visualização RPG opcional para quem prefere acompanhar o progresso com elementos de gamificação.
 
@@ -163,7 +163,7 @@ O processo atual usa Cloudflare Pages com build `pnpm build` e diretório de sa�
 - a sincronização profissional depende da migração `professional_workspaces`;
 - não há colaboração entre usuários, notificações push ou aplicativo nativo;
 - os textos de Privacidade e Termos descrevem o estado atual, mas não substituem revisão jurídica profissional;
-- dúvidas, suporte e solicitações relacionadas a dados são recebidos em `contato.neurosyncapp@gmail.com`;
+- dúvidas, suporte e solicitações relacionadas a dados são recebidos em `arcmodeapp@gmail.com`;
 - não existe integração com modelo de inteligência artificial; o planejamento é baseado em regras.
 
 ## Roadmap

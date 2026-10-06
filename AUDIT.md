@@ -4,7 +4,7 @@ Data da revisão: 10 de setembro de 2026.
 
 ## Escopo observado
 
-- código real: `C:\Users\mathe\Documents\8. App NeuroSync\Codigo`;
+- código real: `C:\Users\mathe\Documents\8. App ArcMode\Codigo`;
 - produção: `https://arcmode-app.pages.dev`;
 - frontend React/Vite hospedado no Cloudflare Pages;
 - Supabase para autenticação, Postgres e RLS;
@@ -89,4 +89,4 @@ O Git foi inicializado diretamente na pasta `Codigo`, preservando a estrutura or
 
 O conteúdo versionado inclui código, configurações públicas, documentação, migrações e materiais do projeto. Permanecem excluídos: `.env`, `node_modules`, `dist`, `.wrangler`, caches, logs, PIDs, ZIPs, arquivos de inspeção, `qa-screenshots` e credenciais locais.
 
-O canal oficial para suporte e solicitações relacionadas a dados é `contato.neurosyncapp@gmail.com`. Senhas, tokens e outros dados sensíveis não devem ser enviados.
+O canal oficial para suporte e solicitações relacionadas a dados é `arcmodeapp@gmail.com`. Senhas, tokens e outros dados sensíveis não devem ser enviados.

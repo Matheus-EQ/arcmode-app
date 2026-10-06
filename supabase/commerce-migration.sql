@@ -6,7 +6,7 @@ create table if not exists public.app_settings (
   id boolean primary key default true check (id),
   billing_enforced boolean not null default false,
   checkout_url text,
-  support_email text not null default 'contato.neurosyncapp@gmail.com',
+  support_email text not null default 'arcmodeapp@gmail.com',
   updated_date timestamptz not null default now()
 );
 
