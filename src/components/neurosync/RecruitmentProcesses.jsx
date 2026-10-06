@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import {
-  BriefcaseBusiness, Building2, CalendarDays, ChevronRight, CircleDot,
-  Clock3, FileText, MapPin, Pencil, Plus, Trash2, UserSearch, X
+  CalendarDays, MapPin, Pencil, Plus, Search, SlidersHorizontal,
+  Trash2, UserSearch, X
 } from 'lucide-react';
 
 const PROCESS_STATUSES = [
@@ -28,9 +28,18 @@ const emptyStage = () => ({
   completed: false
 });
 
-const formatDate = (value) => value
-  ? new Date(`${value}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+const formatEventDate = (value) => value
+  ? new Date(`${value}T12:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' })
   : 'Data a definir';
+
+const PROCESS_FILTERS = [
+  { value: 'all', label: 'Todos' },
+  { value: 'active', label: 'Em andamento' },
+  { value: 'interviews', label: 'Entrevistas' },
+  { value: 'tests', label: 'Testes' },
+  { value: 'waiting', label: 'Aguardando retorno' },
+  { value: 'closed', label: 'Finalizados' }
+];
 
 function ProcessModal({ process, onClose, onSave, onDelete }) {
   const [role, setRole] = useState(process?.role || '');
@@ -124,51 +133,72 @@ function ProcessModal({ process, onClose, onSave, onDelete }) {
 export default function RecruitmentProcesses({ processes = [], onSave, onDelete, onOpenCalendar }) {
   const [editing, setEditing] = useState(null);
   const [creating, setCreating] = useState(false);
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
   const ordered = useMemo(() => [...processes].sort((a, b) => {
     const aNext = (a.stages || []).filter((stage) => stage.date && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
     const bNext = (b.stages || []).filter((stage) => stage.date && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
     return (aNext ? `${aNext.date}${aNext.time}` : '9999').localeCompare(bNext ? `${bNext.date}${bNext.time}` : '9999');
   }), [processes]);
-  const activeCount = processes.filter((item) => item.status !== 'closed').length;
-  const scheduledCount = processes.flatMap((item) => item.stages || []).filter((stage) => stage.date && !stage.completed).length;
+  const visibleProcesses = useMemo(() => ordered.filter((process) => {
+    const stages = process.stages || [];
+    const next = stages.filter((stage) => stage.date && !stage.completed).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))[0];
+    const waiting = process.status !== 'closed' && !next && stages.some((stage) => stage.completed);
+    const searchable = `${process.company || ''} ${process.role || ''} ${process.location || ''}`.toLocaleLowerCase('pt-BR');
+    const matchesSearch = searchable.includes(search.trim().toLocaleLowerCase('pt-BR'));
+    const nextType = next?.type?.toLocaleLowerCase('pt-BR') || '';
+    const matchesFilter = filter === 'all'
+      || (filter === 'active' && process.status !== 'closed' && !waiting)
+      || (filter === 'interviews' && (nextType.includes('entrevista') || (!next && process.status === 'interview')))
+      || (filter === 'tests' && (nextType.includes('teste') || (!next && process.status === 'challenge')))
+      || (filter === 'waiting' && waiting)
+      || (filter === 'closed' && process.status === 'closed');
+    return matchesSearch && matchesFilter;
+  }), [ordered, filter, search]);
   const closeModal = () => { setCreating(false); setEditing(null); };
 
   return (
     <div className="professional-page">
-      <div className="professional-heading"><div><p className="professional-eyebrow">Carreira</p><h2>Processos seletivos</h2><p>Acompanhe cada candidatura e leve testes e entrevistas para a sua agenda.</p></div><button onClick={() => setCreating(true)} className="professional-primary"><Plus size={16}/>Novo processo</button></div>
+      <div className="professional-heading"><div><p className="professional-eyebrow">Processos seletivos</p><h2>Processos seletivos</h2><p>Acompanhe suas candidaturas, testes e entrevistas em um só lugar.</p></div><button onClick={() => setCreating(true)} className="professional-primary"><Plus size={16}/>Novo processo</button></div>
 
-      <div className="grid sm:grid-cols-3 gap-3 mb-6">
-        <div className="professional-card p-4"><UserSearch size={18} className="text-blue-700"/><p className="mt-3 text-xl font-semibold text-slate-950">{activeCount}</p><p className="text-xs text-slate-600">Processos em andamento</p></div>
-        <div className="professional-card p-4"><CalendarDays size={18} className="text-amber-700"/><p className="mt-3 text-xl font-semibold text-slate-950">{scheduledCount}</p><p className="text-xs text-slate-600">Próximas etapas agendadas</p></div>
-        <button onClick={onOpenCalendar} className="professional-card p-4 text-left hover:border-blue-300 hover:shadow-md transition-all"><Clock3 size={18} className="text-slate-700"/><p className="mt-3 text-sm font-semibold text-slate-950 flex items-center justify-between">Abrir agenda <ChevronRight size={16}/></p><p className="text-xs text-slate-600 mt-1">Veja entrevistas junto da sua rotina.</p></button>
+      <div className="mb-5 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+        <div className="flex gap-1.5 overflow-x-auto pb-1" role="tablist" aria-label="Filtrar processos seletivos">
+          {PROCESS_FILTERS.map((item) => <button key={item.value} type="button" role="tab" aria-selected={filter === item.value} onClick={() => setFilter(item.value)} className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors ${filter === item.value ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'}`}>{item.label}</button>)}
+        </div>
+        <div className="flex gap-2">
+          <label className="relative flex-1 xl:w-64"><Search size={16} className="absolute left-3 top-3 text-slate-500"/><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar processos..." className="w-full h-10 pl-9 pr-3 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm outline-none focus:ring-2 focus:ring-slate-200"/></label>
+          <button type="button" onClick={() => { setFilter('all'); setSearch(''); }} className="professional-icon-button" aria-label="Limpar filtros" title="Limpar filtros"><SlidersHorizontal size={17}/></button>
+        </div>
       </div>
 
-      <div className="space-y-4">
-        {ordered.map((process) => {
+      <div className="space-y-3">
+        {visibleProcesses.map((process) => {
           const status = PROCESS_STATUSES.find((item) => item.value === process.status) || PROCESS_STATUSES[0];
           const stages = process.stages || [];
           const complete = stages.filter((stage) => stage.completed).length;
           const next = stages.filter((stage) => stage.date && !stage.completed).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))[0];
+          const currentStage = stages.findIndex((stage) => !stage.completed);
+          const accent = process.status === 'challenge' ? 'teal' : 'blue';
           return (
-            <article key={process.id} className="professional-card overflow-hidden">
-              <div className="p-5 flex flex-col lg:flex-row lg:items-start gap-5">
-                <div className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center shrink-0"><Building2 size={20}/></div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2"><h3 className="text-lg font-semibold text-slate-950">{process.role}</h3><span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${status.tone}`}>{status.label}</span></div>
-                  <p className="text-sm font-medium text-slate-700 mt-1 flex items-center gap-1.5"><BriefcaseBusiness size={14}/>{process.company}</p>
-                  {process.location && <p className="text-xs text-slate-600 mt-1 flex items-center gap-1.5"><MapPin size={13}/>{process.location}</p>}
-                  {process.description && <p className="text-sm text-slate-600 leading-relaxed mt-3 line-clamp-2"><FileText size={14} className="inline mr-1.5"/>{process.description}</p>}
+            <article key={process.id} className="professional-card p-4 sm:p-5">
+              <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)_minmax(0,1fr)_auto] gap-4 lg:gap-6 items-center">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 text-2xl font-semibold ${accent === 'teal' ? 'bg-teal-50 text-teal-700' : 'bg-blue-50 text-blue-700'}`}>{(process.company || '?').trim().charAt(0).toLocaleUpperCase('pt-BR')}</div>
+                  <div className="min-w-0"><span className="inline-flex px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-[10px] font-semibold">{status.label}</span><h3 className="mt-1 text-lg font-semibold text-slate-950 truncate">{process.company}</h3><p className="text-sm text-slate-600 truncate">{process.role}</p>{process.location && <p className="text-xs text-slate-500 mt-1 flex items-center gap-1"><MapPin size={12}/>{process.location}</p>}</div>
                 </div>
-                <button onClick={() => setEditing(process)} className="professional-secondary shrink-0"><Pencil size={14}/>Editar</button>
-              </div>
-              <div className="border-t border-slate-200 bg-slate-50 px-5 py-4 grid md:grid-cols-[1fr_auto] gap-4 items-center">
-                <div>{next ? <><p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-600">Próxima etapa</p><p className="text-sm font-semibold text-slate-900 mt-1">{next.type}</p><p className="text-xs text-slate-600 mt-1">{formatDate(next.date)} · {next.time} · {next.duration || 60} min</p></> : <><p className="text-sm font-semibold text-slate-800">Nenhuma próxima etapa marcada</p><p className="text-xs text-slate-600 mt-1">Edite o processo quando receber um convite.</p></>}</div>
-                <div className="md:text-right"><p className="text-xs font-semibold text-slate-700">{complete} de {stages.length} etapas concluídas</p><div className="flex gap-1.5 mt-2 md:justify-end">{stages.length ? stages.map((stage) => <span key={stage.id} className={`w-7 h-2 rounded-full ${stage.completed ? 'bg-emerald-600' : 'bg-slate-300'}`}/>) : <CircleDot size={17} className="text-slate-400"/>}</div></div>
+
+                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Etapa atual</p>{next ? <><span className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><UserSearch size={15} className="shrink-0"/>{next.type}</span><div className="flex items-center mt-3 max-w-56" aria-label={`${complete} etapas concluídas de ${stages.length}`}>
+                  {stages.map((stage, index) => <React.Fragment key={stage.id}><span className={`w-2.5 h-2.5 rounded-full shrink-0 ${stage.completed ? (accent === 'teal' ? 'bg-teal-600' : 'bg-blue-600') : index === currentStage ? `ring-2 ring-offset-1 ${accent === 'teal' ? 'ring-teal-600 bg-white' : 'ring-blue-600 bg-white'}` : 'bg-white border-2 border-slate-300'}`}/>{index < stages.length - 1 && <span className={`h-0.5 flex-1 ${stage.completed ? (accent === 'teal' ? 'bg-teal-600' : 'bg-blue-600') : 'bg-slate-200'}`}/>}</React.Fragment>)}
+                </div></> : <p className="text-sm text-slate-600">{stages.length ? 'Aguardando retorno' : 'Etapa ainda não definida'}</p>}</div>
+
+                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Próximo evento</p>{next ? <button type="button" onClick={onOpenCalendar} className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate text-left ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><CalendarDays size={15} className="shrink-0"/>{next.type} · {formatEventDate(next.date)} · {next.time || 'Horário a definir'}</button> : <p className="text-sm text-slate-500">Sem evento agendado</p>}</div>
+
+                <div className="flex items-center justify-end gap-2"><span className="hidden xl:block text-[11px] text-slate-500 whitespace-nowrap">{complete}/{stages.length} etapas</span><button onClick={() => setEditing(process)} className="professional-icon-button" aria-label={`Editar processo ${process.company}`} title="Editar processo"><Pencil size={15}/></button></div>
               </div>
             </article>
           );
         })}
-        {ordered.length === 0 && <div className="professional-empty professional-card"><UserSearch size={32}/><h3>Nenhum processo seletivo</h3><p>Adicione uma vaga para acompanhar o andamento e não perder testes ou entrevistas.</p><button onClick={() => setCreating(true)} className="professional-primary mt-2"><Plus size={16}/>Adicionar primeiro processo</button></div>}
+        {visibleProcesses.length === 0 && <div className="professional-empty professional-card"><UserSearch size={32}/><h3>{processes.length ? 'Nenhum processo encontrado' : 'Nenhum processo seletivo'}</h3><p>{processes.length ? 'Ajuste a busca ou escolha outro filtro.' : 'Adicione uma vaga para acompanhar o andamento e não perder testes ou entrevistas.'}</p>{processes.length === 0 && <button onClick={() => setCreating(true)} className="professional-primary mt-2"><Plus size={16}/>Adicionar primeiro processo</button>}</div>}
       </div>
       {(creating || editing) && <ProcessModal process={editing} onClose={closeModal} onSave={onSave} onDelete={onDelete}/>}
     </div>
