@@ -21,11 +21,14 @@ function QuickCapture({ onCreate }) {
   const [value, setValue] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState('');
   const inputRef = useRef(null);
 
   useEffect(() => {
     const handleShortcut = (event) => {
-      if (event.key.toLowerCase() === 'q' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
+      const activeElement = document.activeElement;
+      const isEditing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(activeElement?.tagName) || activeElement?.isContentEditable;
+      if (event.key.toLowerCase() === 'q' && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey && !isEditing) {
         event.preventDefault();
         inputRef.current?.focus();
       }
@@ -34,31 +37,41 @@ function QuickCapture({ onCreate }) {
     return () => window.removeEventListener('keydown', handleShortcut);
   }, []);
 
-  const submit = async () => {
+  const submit = async (event) => {
+    event?.preventDefault();
     if (!value.trim() || saving) return;
     setSaving(true);
-    await onCreate(value.trim());
-    setValue('');
-    setSaved(true);
-    setSaving(false);
-    window.setTimeout(() => setSaved(false), 1800);
+    setError('');
+    setSaved(false);
+    try {
+      await onCreate(value.trim());
+      setValue('');
+      setSaved(true);
+      window.setTimeout(() => setSaved(false), 1800);
+    } catch (_) {
+      setError('Não foi possível salvar. Sua captura continua no campo para tentar novamente.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
-    <div className="relative flex-1 max-w-3xl">
+    <form onSubmit={submit} className="relative flex-1 max-w-3xl">
       <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-600" />
       <input
         ref={inputRef}
         value={value}
-        onChange={(event) => setValue(event.target.value)}
-        onKeyDown={(event) => event.key === 'Enter' && submit()}
+        onChange={(event) => { setValue(event.target.value); setError(''); }}
         placeholder="Captura rápida: Relatório sexta às 14h, alta prioridade, 45 min, #Projeto"
+        aria-label="Captura rápida de tarefa"
         className="w-full h-11 pl-10 pr-24 rounded-xl bg-white border border-slate-300 text-sm text-slate-950 outline-none focus:border-slate-600 focus:ring-4 focus:ring-slate-200 transition-all"
       />
-      <button onClick={submit} disabled={!value.trim() || saving} className="absolute right-1.5 top-1.5 h-8 px-3 rounded-lg bg-slate-900 text-white text-xs font-semibold disabled:opacity-30">
+      <button type="submit" disabled={!value.trim() || saving} className="absolute right-1.5 top-1.5 h-8 px-3 rounded-lg bg-slate-900 text-white text-xs font-semibold disabled:opacity-40">
         {saved ? <CheckCircle2 size={15}/> : saving ? '...' : 'Adicionar'}
       </button>
-    </div>
+      {error && <span role="alert" className="absolute left-2 top-full z-40 mt-1 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-800 shadow-sm">{error}</span>}
+      <span className="sr-only" aria-live="polite">{saved ? 'Tarefa adicionada.' : ''}</span>
+    </form>
   );
 }
 
@@ -84,7 +97,7 @@ export default function ProfessionalLayout({ activeTab, setActiveTab, onQuickCre
           </div>
           <nav className="space-y-1">
             {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
-              <button key={id} onClick={() => navigate(id)} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${activeTab === id ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}>
+              <button key={id} onClick={() => navigate(id)} aria-current={activeTab === id ? 'page' : undefined} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${activeTab === id ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-600 hover:bg-white hover:text-slate-900'}`}>
                 <Icon size={17}/><span className="flex-1 text-left font-medium">{label}</span>{activeTab === id && <ChevronRight size={14}/>} 
               </button>
             ))}
@@ -110,13 +123,13 @@ export default function ProfessionalLayout({ activeTab, setActiveTab, onQuickCre
         </section>
       </div>
 
-      {mobileMenu && <div className="lg:hidden fixed inset-0 z-[79] bg-slate-950/30" onClick={() => setMobileMenu(false)}><div className="absolute bottom-20 left-3 right-3 bg-white rounded-2xl border border-slate-200 shadow-2xl p-3" onClick={(event) => event.stopPropagation()}><div className="flex items-center justify-between px-2 py-2"><p className="text-sm font-semibold text-slate-900">Mais áreas</p><button onClick={() => setMobileMenu(false)} className="professional-icon-button"><X size={16}/></button></div><div className="grid grid-cols-2 gap-2 mt-2">{NAV_ITEMS.filter((item) => !['overview','diarias','calendar'].includes(item.id)).map(({id,label,icon:Icon})=><button key={id} onClick={()=>navigate(id)} className={`flex items-center gap-2 p-3 rounded-xl text-sm font-medium ${activeTab===id?'bg-slate-900 text-white':'bg-slate-50 text-slate-700'}`}><Icon size={16}/>{label}</button>)}</div></div></div>}
+      {mobileMenu && <div className="lg:hidden fixed inset-0 z-[79] bg-slate-950/30" onClick={() => setMobileMenu(false)}><section role="dialog" aria-modal="true" aria-labelledby="professional-mobile-menu-title" className="absolute bottom-20 left-3 right-3 bg-white rounded-2xl border border-slate-200 shadow-2xl p-3" onClick={(event) => event.stopPropagation()}><div className="flex items-center justify-between px-2 py-2"><p id="professional-mobile-menu-title" className="text-sm font-semibold text-slate-900">Mais áreas</p><button onClick={() => setMobileMenu(false)} className="professional-icon-button" aria-label="Fechar menu"><X size={16}/></button></div><div className="grid grid-cols-2 gap-2 mt-2">{NAV_ITEMS.filter((item) => !['overview','diarias','calendar'].includes(item.id)).map(({id,label,icon:Icon})=><button key={id} onClick={()=>navigate(id)} aria-current={activeTab===id?'page':undefined} className={`flex items-center gap-2 p-3 rounded-xl text-sm font-medium ${activeTab===id?'bg-slate-900 text-white':'bg-slate-50 text-slate-700'}`}><Icon size={16}/>{label}</button>)}</div></section></div>}
 
       <nav className="lg:hidden fixed bottom-3 left-3 right-3 z-[80] h-16 px-2 grid grid-cols-5 items-center bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-[0_12px_40px_rgba(15,23,42,0.18)]">
-        {[NAV_ITEMS[0], NAV_ITEMS[1]].map(({id,label,icon:Icon})=><button key={id} onClick={()=>navigate(id)} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${activeTab===id?'text-slate-950':'text-slate-600'}`}><Icon size={19}/>{label}</button>)}
-        <button onClick={() => setMobileCreate(true)} className="w-11 h-11 -mt-5 mx-auto rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg" title="Criar novo"><Plus size={22}/></button>
-        <button onClick={()=>navigate('calendar')} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${activeTab==='calendar'?'text-slate-950':'text-slate-600'}`}><CalendarDays size={19}/>Agenda</button>
-        <button onClick={()=>setMobileMenu(true)} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${!['overview','diarias','calendar'].includes(activeTab)?'text-slate-950':'text-slate-600'}`}><Menu size={19}/>Menu</button>
+        {[NAV_ITEMS[0], NAV_ITEMS[1]].map(({id,label,icon:Icon})=><button key={id} onClick={()=>navigate(id)} aria-current={activeTab===id?'page':undefined} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${activeTab===id?'text-slate-950':'text-slate-600'}`}><Icon size={19}/>{label}</button>)}
+        <button onClick={() => setMobileCreate(true)} className="w-11 h-11 -mt-5 mx-auto rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-lg" title="Criar novo" aria-label="Criar novo"><Plus size={22}/></button>
+        <button onClick={()=>navigate('calendar')} aria-current={activeTab==='calendar'?'page':undefined} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${activeTab==='calendar'?'text-slate-950':'text-slate-600'}`}><CalendarDays size={19}/>Agenda</button>
+        <button onClick={()=>setMobileMenu(true)} aria-haspopup="dialog" aria-expanded={mobileMenu} className={`flex flex-col items-center gap-1 text-[9px] font-medium ${!['overview','diarias','calendar'].includes(activeTab)?'text-slate-950':'text-slate-600'}`}><Menu size={19}/>Menu</button>
       </nav>
       <UniversalCreateMenu open={mobileCreate} onClose={() => setMobileCreate(false)} experienceMode="professional" onCreateTask={onCreateTask} onCreateCommitment={onCreateCommitment} onCreateProject={onCreateProject} />
     </div>

@@ -40,6 +40,21 @@ const AuthenticatedApp = () => {
       // Redirect to login automatically
       navigateToLogin();
       return null;
+    } else if (authError.type === 'configuration_error') {
+      return (
+        <main className="min-h-screen bg-slate-100 text-slate-900 flex items-center justify-center p-6">
+          <section className="w-full max-w-lg rounded-3xl border border-amber-200 bg-white p-8 shadow-xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-700">Acesso temporariamente indisponível</p>
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-slate-950">Não foi possível conectar sua conta</h1>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              {authError.message} Seus dados não foram removidos. Tente novamente mais tarde.
+            </p>
+            <a href="/" className="mt-6 inline-flex rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+              Voltar à página inicial
+            </a>
+          </section>
+        </main>
+      );
     }
   }
 
