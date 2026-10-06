@@ -5,13 +5,13 @@ Textos preparados para aprovação. A aplicação e o repositório estão públi
 ## Capturas recomendadas
 
 1. **Painel Profissional:** `public/marketing/screenshots/professional-desktop.png` — planejamento, prioridades e capacidade do dia.
-2. **Agenda semanal:** `public/marketing/screenshots/professional-weekly-calendar.png` — tarefas e compromissos no calendário.
+2. **Agenda diária:** `public/marketing/screenshots/professional-daily-calendar.png` — visão do dia com opções semanal e mensal.
 3. **Projetos e processos seletivos:** `public/marketing/screenshots/professional-projects.png` e `public/marketing/screenshots/professional-recruitment.png`.
 4. **Profissional no celular:** `public/marketing/screenshots/professional-mobile.png` — responsividade.
 5. **Modo RPG:** `public/marketing/screenshots/rpg-progress.png`, `rpg-bosses.png` e `rpg-rewards.png` — personagem, evolução, bosses e recompensas.
 6. **RPG no celular:** `public/marketing/screenshots/rpg-mobile.png` — navegação móvel gamificada.
 
-Na publicação, comece pelo painel Profissional e siga com calendário, projetos e processos seletivos. Use o RPG como diferencial secundário, destacando evolução, bosses e recompensas, e encerre com as telas móveis.
+Na apresentação, comece pelo painel Profissional e siga com calendário, projetos e processos seletivos. Explique o Modo Profissional como foco de organização e o RPG como visualização gamificada opcional. As imagens de calendário e processos seletivos são mockups ilustrativos com dados fictícios; identifique-as como tais.
 
 ## Roteiro de demonstração — cerca de 30 segundos
 
@@ -21,55 +21,40 @@ Na publicação, comece pelo painel Profissional e siga com calendário, projeto
 
 **9–16 s:** mostrar o painel Profissional, as prioridades e “Organizar meu dia”. “Regras de planejamento consideram prazos, dependências, duração e capacidade disponível.”
 
-**16–22 s:** abrir a agenda semanal e iniciar um cronômetro. “Tarefas e compromissos dividem o mesmo tempo, com sessões de foco integradas.”
+**16–22 s:** abrir a agenda diária e mostrar as opções semanal e mensal. “Tarefas e compromissos dividem o mesmo calendário, com sessões de foco integradas.”
 
 **22–27 s:** trocar para o modo RPG. “A mesma rotina pode ser visualizada como missões, níveis e desafios.”
 
-**27–30 s:** mostrar relatórios e voltar à landing. “O resultado é uma aplicação responsiva com autenticação, persistência e uma demonstração pública segura.”
+**27–30 s:** mostrar relatórios e voltar à landing. “O ArcMode continua em desenvolvimento; a demonstração usa dados fictícios e fica isolada neste navegador.”
 
 ## Seção Projetos do LinkedIn
 
-Desenvolvimento do ArcMode, uma aplicação web responsiva para organização de tarefas, projetos, compromissos e tempo, com modos Profissional e RPG. O sistema inclui planejamento diário por prioridades, agenda semanal e mensal, recorrência, dependências, divisão em sessões, cronômetro e indicadores de execução. Construído com React e Vite, Supabase para autenticação e persistência com RLS e Cloudflare Pages para hospedagem. O produto também possui demonstração sem cadastro, com dados isolados no navegador.
+Projeto pessoal em desenvolvimento para organizar tarefas, projetos, compromissos e processos seletivos em uma rotina planejável. O Modo Profissional é a experiência principal, com prioridades, projetos e agenda diária, semanal e mensal. O Modo RPG é uma alternativa opcional que representa o progresso com missões, evolução de personagem e recompensas. A demonstração usa dados fictícios e fica isolada no navegador.
 
 ## Item em Destaques
 
-ArcMode — aplicação de produtividade com planejamento diário, agenda integrada, projetos, sessões de foco e duas experiências visuais. Explore a demonstração sem cadastro e conheça o fluxo completo nos modos Profissional e RPG.
+ArcMode — projeto pessoal em desenvolvimento para organização de tarefas, agenda, projetos e processos seletivos. O Modo Profissional é o foco; o Modo RPG é uma alternativa gamificada. Demonstração com dados fictícios.
 
 ## Post de LinkedIn
 
-Como transformar uma lista de tarefas em um plano que realmente cabe no dia?
+Como organizar tarefas e compromissos para formar um plano mais claro para o dia?
 
-Esse foi o problema que guiou o desenvolvimento do ArcMode, um projeto pessoal de produtividade e planejamento. A aplicação reúne tarefas, projetos e compromissos e usa regras de organização para considerar prioridades, prazos, recorrência, dependências, duração e capacidade disponível.
+Esse foi o problema que guiou o ArcMode, um projeto pessoal de organização e planejamento ainda em desenvolvimento. A aplicação reúne tarefas, projetos, compromissos e processos seletivos para ajudar a visualizar prioridades, horários e próximos passos.
 
 Criei duas formas de usar a mesma rotina:
 
-- o Modo Profissional, com uma interface objetiva para planejamento, agenda e relatórios;
-- o Modo RPG, que apresenta o progresso como missões, níveis e desafios.
+- o Modo Profissional, experiência principal para organizar tarefas, agenda, projetos e candidaturas;
+- o Modo RPG, alternativa opcional que representa parte do progresso como missões, evolução de personagem e desafios.
 
-Entre os principais aprendizados estiveram modelagem de estado, autenticação e recuperação de senha, persistência com Supabase, segurança com Row Level Security, sincronização com fallback local, responsividade e construção de um modo demonstração que não grava no banco de produção.
-
-A stack atual inclui React, Vite, Tailwind CSS, TanStack Query, Supabase e Cloudflare Pages.
-
-O projeto segue em desenvolvimento. A próxima etapa é revisar as configurações externas de autenticação, concluir a validação de produção e abrir a demonstração para feedback.
+O projeto continua em desenvolvimento. A prioridade é amadurecer a experiência de organização, validar os fluxos principais e melhorar acessibilidade, confiabilidade e portabilidade dos dados. As imagens de divulgação usam mockups e registros fictícios.
 
 ## Competências associadas
 
-- React e componentização;
-- JavaScript e JSX;
-- Vite;
-- Tailwind CSS;
-- design responsivo;
-- acessibilidade básica de interfaces;
-- React Router;
-- TanStack Query;
-- modelagem de dados com PostgreSQL;
-- Supabase Auth;
-- Row Level Security (RLS);
-- armazenamento local no navegador;
-- autenticação, sessão e recuperação de senha;
-- segurança de aplicações frontend;
-- deploy estático no Cloudflare Pages;
-- lint, typecheck e build de produção;
-- documentação técnica e experiência de demonstração.
+- organização de tarefas, projetos e compromissos;
+- planejamento por prioridades, prazos e capacidade disponível;
+- acompanhamento de etapas e próximos passos;
+- organização de processos seletivos, testes e entrevistas;
+- estruturação de uma experiência digital para apoiar a rotina;
+- documentação do escopo, do estado atual e das limitações do produto.
 
 Não associar “inteligência artificial” ao projeto enquanto não houver integração real com um modelo. O recurso atual deve ser descrito como planejamento baseado em regras ou organização automática.
