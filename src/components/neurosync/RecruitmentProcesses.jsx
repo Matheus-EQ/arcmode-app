@@ -1,14 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import {
-  CalendarDays, MapPin, Pencil, Plus, Search, SlidersHorizontal,
+  CalendarDays, MapPin, MoreHorizontal, Pencil, Plus, Search, SlidersHorizontal,
   Trash2, UserSearch, X
 } from 'lucide-react';
+import { getLocalDateKey } from '@/lib/neurosync-session';
 
 const PROCESS_STATUSES = [
   { value: 'applied', label: 'Candidatura enviada', tone: 'bg-blue-100 text-blue-800' },
   { value: 'screening', label: 'Triagem', tone: 'bg-cyan-100 text-cyan-800' },
   { value: 'interview', label: 'Entrevistas', tone: 'bg-amber-100 text-amber-800' },
   { value: 'challenge', label: 'Teste técnico', tone: 'bg-violet-100 text-violet-800' },
+  { value: 'waiting', label: 'Aguardando retorno', tone: 'bg-sky-100 text-sky-800' },
   { value: 'offer', label: 'Proposta', tone: 'bg-emerald-100 text-emerald-800' },
   { value: 'closed', label: 'Encerrado', tone: 'bg-slate-200 text-slate-700' }
 ];
@@ -135,22 +137,23 @@ export default function RecruitmentProcesses({ processes = [], onSave, onDelete,
   const [creating, setCreating] = useState(false);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const todayKey = getLocalDateKey();
   const ordered = useMemo(() => [...processes].sort((a, b) => {
-    const aNext = (a.stages || []).filter((stage) => stage.date && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
-    const bNext = (b.stages || []).filter((stage) => stage.date && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
+    const aNext = (a.stages || []).filter((stage) => stage.date >= todayKey && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
+    const bNext = (b.stages || []).filter((stage) => stage.date >= todayKey && !stage.completed).sort((x, y) => `${x.date}${x.time}`.localeCompare(`${y.date}${y.time}`))[0];
     return (aNext ? `${aNext.date}${aNext.time}` : '9999').localeCompare(bNext ? `${bNext.date}${bNext.time}` : '9999');
-  }), [processes]);
+  }), [processes, todayKey]);
   const visibleProcesses = useMemo(() => ordered.filter((process) => {
     const stages = process.stages || [];
-    const next = stages.filter((stage) => stage.date && !stage.completed).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))[0];
-    const waiting = process.status !== 'closed' && !next && stages.some((stage) => stage.completed);
+    const currentStage = stages.find((stage) => !stage.completed);
+    const waiting = process.status === 'waiting' || (process.status !== 'closed' && stages.length > 0 && stages.every((stage) => stage.completed));
     const searchable = `${process.company || ''} ${process.role || ''} ${process.location || ''}`.toLocaleLowerCase('pt-BR');
     const matchesSearch = searchable.includes(search.trim().toLocaleLowerCase('pt-BR'));
-    const nextType = next?.type?.toLocaleLowerCase('pt-BR') || '';
+    const currentType = currentStage?.type?.toLocaleLowerCase('pt-BR') || '';
     const matchesFilter = filter === 'all'
-      || (filter === 'active' && process.status !== 'closed' && !waiting)
-      || (filter === 'interviews' && (nextType.includes('entrevista') || (!next && process.status === 'interview')))
-      || (filter === 'tests' && (nextType.includes('teste') || (!next && process.status === 'challenge')))
+      || (filter === 'active' && process.status !== 'closed' && process.status !== 'waiting' && !waiting)
+      || (filter === 'interviews' && (currentType.includes('entrevista') || (!currentStage && process.status === 'interview')))
+      || (filter === 'tests' && (currentType.includes('teste') || (!currentStage && process.status === 'challenge')))
       || (filter === 'waiting' && waiting)
       || (filter === 'closed' && process.status === 'closed');
     return matchesSearch && matchesFilter;
@@ -176,8 +179,8 @@ export default function RecruitmentProcesses({ processes = [], onSave, onDelete,
           const status = PROCESS_STATUSES.find((item) => item.value === process.status) || PROCESS_STATUSES[0];
           const stages = process.stages || [];
           const complete = stages.filter((stage) => stage.completed).length;
-          const next = stages.filter((stage) => stage.date && !stage.completed).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))[0];
           const currentStage = stages.findIndex((stage) => !stage.completed);
+          const nextEvent = stages.filter((stage) => stage.date >= todayKey && !stage.completed).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`))[0];
           const accent = process.status === 'challenge' ? 'teal' : 'blue';
           return (
             <article key={process.id} className="professional-card p-4 sm:p-5">
@@ -187,13 +190,13 @@ export default function RecruitmentProcesses({ processes = [], onSave, onDelete,
                   <div className="min-w-0"><span className="inline-flex px-2.5 py-1 rounded-full bg-blue-50 text-blue-700 text-[10px] font-semibold">{status.label}</span><h3 className="mt-1 text-lg font-semibold text-slate-950 truncate">{process.company}</h3><p className="text-sm text-slate-600 truncate">{process.role}</p>{process.location && <p className="text-xs text-slate-500 mt-1 flex items-center gap-1"><MapPin size={12}/>{process.location}</p>}</div>
                 </div>
 
-                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Etapa atual</p>{next ? <><span className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><UserSearch size={15} className="shrink-0"/>{next.type}</span><div className="flex items-center mt-3 max-w-56" aria-label={`${complete} etapas concluídas de ${stages.length}`}>
+                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Etapa atual</p>{stages.length > 0 ? <><span className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><UserSearch size={15} className="shrink-0"/>{currentStage >= 0 ? stages[currentStage].type : (process.status === 'waiting' ? 'Aguardando retorno' : 'Etapas concluídas')}</span><div className="flex items-center mt-3 max-w-56" aria-label={`${complete} etapas concluídas de ${stages.length}`}>
                   {stages.map((stage, index) => <React.Fragment key={stage.id}><span className={`w-2.5 h-2.5 rounded-full shrink-0 ${stage.completed ? (accent === 'teal' ? 'bg-teal-600' : 'bg-blue-600') : index === currentStage ? `ring-2 ring-offset-1 ${accent === 'teal' ? 'ring-teal-600 bg-white' : 'ring-blue-600 bg-white'}` : 'bg-white border-2 border-slate-300'}`}/>{index < stages.length - 1 && <span className={`h-0.5 flex-1 ${stage.completed ? (accent === 'teal' ? 'bg-teal-600' : 'bg-blue-600') : 'bg-slate-200'}`}/>}</React.Fragment>)}
-                </div></> : <p className="text-sm text-slate-600">{stages.length ? 'Aguardando retorno' : 'Etapa ainda não definida'}</p>}</div>
+                </div></> : <p className="text-sm text-slate-600">{process.status === 'waiting' ? 'Aguardando retorno' : 'Etapa ainda não definida'}</p>}</div>
 
-                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Próximo evento</p>{next ? <button type="button" onClick={onOpenCalendar} className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate text-left ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><CalendarDays size={15} className="shrink-0"/>{next.type} · {formatEventDate(next.date)} · {next.time || 'Horário a definir'}</button> : <p className="text-sm text-slate-500">Sem evento agendado</p>}</div>
+                <div className="lg:border-l lg:border-slate-200 lg:pl-5 min-w-0"><p className="text-[11px] font-medium text-slate-500 mb-2">Próximo evento</p>{nextEvent ? <button type="button" onClick={onOpenCalendar} className={`inline-flex max-w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold truncate text-left ${accent === 'teal' ? 'bg-teal-50 text-teal-800' : 'bg-blue-50 text-blue-800'}`}><CalendarDays size={15} className="shrink-0"/>{nextEvent.type} · {formatEventDate(nextEvent.date)} · {nextEvent.time || 'Horário a definir'}</button> : <p className="text-sm text-slate-500">Sem evento futuro agendado</p>}</div>
 
-                <div className="flex items-center justify-end gap-2"><span className="hidden xl:block text-[11px] text-slate-500 whitespace-nowrap">{complete}/{stages.length} etapas</span><button onClick={() => setEditing(process)} className="professional-icon-button" aria-label={`Editar processo ${process.company}`} title="Editar processo"><Pencil size={15}/></button></div>
+                <div className="flex items-center justify-end gap-2"><span className="hidden xl:block text-[11px] text-slate-500 whitespace-nowrap">{complete}/{stages.length} etapas</span><details className="relative"><summary className="professional-icon-button list-none cursor-pointer" aria-label={`Ações do processo ${process.company}`} title="Mais opções"><MoreHorizontal size={17}/></summary><div className="absolute right-0 top-full z-20 mt-1 min-w-44 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl"><button type="button" onClick={(event) => { event.currentTarget.closest('details').open = false; setEditing(process); }} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"><Pencil size={14}/>Editar processo</button><button type="button" onClick={(event) => { event.currentTarget.closest('details').open = false; onOpenCalendar(); }} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"><CalendarDays size={14}/>Abrir agenda</button><button type="button" onClick={(event) => { event.currentTarget.closest('details').open = false; if (window.confirm(`Excluir o processo seletivo de ${process.company}?`)) onDelete(process.id); }} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-red-700 hover:bg-red-50"><Trash2 size={14}/>Excluir processo</button></div></details></div>
               </div>
             </article>
           );
